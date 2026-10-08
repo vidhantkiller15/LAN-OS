@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LanPC</title>
+<style>
+:root{--ink:#12222b;--glow:#24505a;--deep:#1d3b44;--tbi:#2a4650;--acc:#2c6e73;--acc2:#f0a73a;--acc2t:#2b1c00;--paper:#eef1f1;--tool:#e3e8e8;--field:#fff;--soft:#e3ebeb;--hover:#e0eaea;--line:#c9d2d3;--text:#172126;--mut:#5d6f74;--bar:#0c171d;--bart:#dfe9ea}
+html[data-theme=midnight]{--ink:#0a0e1a;--glow:#1c2a55;--deep:#1b2547;--tbi:#151b33;--acc:#5b7cff;--acc2:#7ee0c3;--acc2t:#04241b;--paper:#151a2b;--tool:#1b2136;--field:#0f1322;--soft:#202845;--hover:#1f2744;--line:#2c3556;--text:#e4e9fb;--mut:#8c96bd;--bar:#070a14;--bart:#cfd6f2}
+html[data-theme=graphite]{--ink:#17181a;--glow:#34363b;--deep:#2b2d31;--tbi:#222427;--acc:#6c7a89;--acc2:#ff7a45;--acc2t:#2a0d00;--paper:#24262a;--tool:#2c2e33;--field:#1a1b1e;--soft:#33353b;--hover:#2f3136;--line:#3a3d43;--text:#e8e9eb;--mut:#9a9ea6;--bar:#0f1012;--bart:#d5d7da}
+html[data-theme=paper]{--ink:#4d6571;--glow:#7a98a6;--deep:#37474f;--tbi:#78909c;--acc:#3f6fb5;--acc2:#e8a33d;--acc2t:#2b1c00;--paper:#fafafa;--tool:#eceff1;--field:#fff;--soft:#e8eef3;--hover:#e3eaf0;--line:#cfd8dc;--text:#1c2428;--mut:#5f6e75;--bar:#263238;--bart:#eceff1}
+html[data-theme=forest]{--ink:#10211a;--glow:#1f4a37;--deep:#1c3d2e;--tbi:#29493b;--acc:#3a7d52;--acc2:#e3c15a;--acc2t:#2a2200;--paper:#eef2ec;--tool:#e2e8df;--field:#fff;--soft:#e1ebdf;--hover:#dde8da;--line:#c6d1c3;--text:#172218;--mut:#5d705f;--bar:#0a140f;--bart:#dbe8de}
+html[data-theme=rose]{--ink:#2a1520;--glow:#5a2a45;--deep:#4a2038;--tbi:#5a3149;--acc:#b04a7a;--acc2:#ffb08a;--acc2t:#3a1500;--paper:#f6eef1;--tool:#ecdfe5;--field:#fff;--soft:#f0e1e8;--hover:#ecdce4;--line:#d8c4cd;--text:#2a1720;--mut:#7a5c6a;--bar:#1a0c13;--bart:#f0dde6}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden;font:14px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);user-select:none}
+body{background:radial-gradient(900px 600px at 85% 10%,var(--glow) 0,transparent 60%),var(--ink)}
+body:not(.desk-on) #icons,body:not(.desk-on) #bar,body:not(.desk-on) #start,body:not(.desk-on) .win{display:none}
+input,textarea,button,select{font:inherit}
+.m{color:var(--mut);font-size:12px}
+/* desktop */
+#icons{position:absolute;left:12px;top:12px;height:calc(100% - 64px);display:grid;grid-auto-flow:column;grid-template-rows:repeat(auto-fill,78px);grid-auto-columns:84px;gap:4px;align-content:start}
+.icon{width:84px;height:74px;padding:6px 4px;text-align:center;color:#f1f6f7;border-radius:6px;cursor:pointer;border:1px solid transparent;background:none}
+.icon:hover,.icon:focus-visible{background:#ffffff14;border-color:#ffffff22;outline:none}
+.icon b{display:block;font-size:28px;font-weight:400;line-height:1.2}.icon span{font-size:12px}
+.win{position:absolute;display:flex;flex-direction:column;min-width:260px;min-height:160px;background:var(--paper);color:var(--text);border:1px solid #0008;border-radius:8px;box-shadow:0 18px 40px #0007;overflow:hidden;resize:both}
+.win.max{inset:0 0 44px 0!important;width:auto!important;height:auto!important;border-radius:0;resize:none}
+.win.min{display:none}
+.tb{display:flex;align-items:center;gap:6px;padding:0 4px 0 10px;height:34px;background:var(--tbi);color:#fff;cursor:move;flex:none;border-bottom:2px solid var(--tbi);touch-action:none}
+.win.on .tb{background:var(--deep);border-bottom-color:var(--acc2)}
+.tb .t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb button{width:30px;height:26px;border:0;border-radius:4px;background:none;color:#fff;font-size:16px;cursor:pointer}
+.tb button:hover{background:#ffffff26}.tb button.x:hover{background:#c0392b}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;user-select:text;overflow:hidden}
+#bar{position:fixed;left:0;right:0;bottom:0;height:44px;display:flex;gap:4px;align-items:center;padding:0 6px;background:var(--bar);color:var(--bart);border-top:1px solid #ffffff1a;z-index:99999}
+#bar .go{background:var(--acc2);color:var(--acc2t);border:0;border-radius:5px;height:32px;padding:0 14px;font-weight:700;cursor:pointer}
+#tasks{flex:1;display:flex;gap:4px;overflow:hidden}
+.task{max-width:160px;min-width:60px;height:32px;padding:0 10px;border:0;border-radius:5px;background:#ffffff14;color:var(--bart);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.task.on{background:#ffffff2e;box-shadow:inset 0 -2px var(--acc2)}
+#clock{padding:0 8px;text-align:right;font-size:12px;line-height:1.2}
+#start{position:fixed;left:6px;bottom:50px;width:230px;max-height:calc(100vh - 60px);overflow:auto;padding:6px;background:var(--bar);color:var(--bart);border:1px solid #ffffff22;border-radius:8px;z-index:99999;display:none}
+#start.open{display:block}
+#start button{display:flex;gap:10px;width:100%;padding:7px 10px;border:0;background:none;color:inherit;border-radius:5px;text-align:left;cursor:pointer}
+#start button:hover{background:#ffffff1c}#start hr{border:0;border-top:1px solid #ffffff1c;margin:4px 0}
+/* shared controls */
+.tool{display:flex;gap:6px;padding:6px;border-bottom:1px solid var(--line);background:var(--tool);align-items:center}
+.btn{border:1px solid var(--line);background:var(--field);color:var(--text);border-radius:5px;padding:4px 12px;cursor:pointer}
+.btn:hover{border-color:var(--acc)}.btn.pri{background:var(--acc);color:#fff;border-color:var(--acc)}.btn.red{background:#b3392f;color:#fff;border-color:#b3392f}
+.in{border:1px solid var(--line);border-radius:5px;padding:5px 8px;background:var(--field);color:var(--text);min-width:0}
+.list{flex:1;overflow:auto}
+.row{display:flex;gap:8px;align-items:center;padding:5px 10px;border-bottom:1px solid var(--line);cursor:pointer}
+.row:hover{background:var(--hover)}.row .n{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.row .m{color:var(--mut)}
+.row .d{border:0;background:none;color:#d05a50;cursor:pointer;font-size:16px}
+textarea.pad{flex:1;border:0;padding:10px;resize:none;outline:none;background:var(--field);color:var(--text);font:13px/1.5 ui-monospace,Menlo,Consolas,monospace}
+.msgs{flex:1;overflow:auto;padding:10px;display:flex;flex-direction:column;gap:6px;background:var(--field)}
+.msg{max-width:85%;padding:6px 10px;border-radius:8px;background:var(--soft);align-self:flex-start;word-break:break-word}
+.msg.me{background:var(--acc);color:#fff;align-self:flex-end}.msg small{display:block;color:var(--mut);font-size:11px}.msg.me small{color:#ffffffb8}
+.calc{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px;flex:1}
+.calc output{grid-column:1/-1;background:var(--field);border:1px solid var(--line);border-radius:5px;padding:8px 10px;text-align:right;font-size:22px;overflow:hidden}
+.calc button{border:1px solid var(--line);background:var(--field);color:var(--text);border-radius:6px;font-size:18px;cursor:pointer}
+.calc button.op{background:var(--soft)}.calc button.eq{background:var(--acc2);color:var(--acc2t);border-color:var(--acc2)}
+.term{flex:1;overflow:auto;background:#0b1418;color:#c8e6d4;padding:8px;font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap}
+.term .ln{display:flex;gap:6px}.term input{flex:1;background:none;border:0;outline:none;color:#fff;font:inherit;padding:0}
+.sys{padding:14px;display:grid;gap:12px;overflow:auto}
+.meter{height:10px;background:var(--line);border-radius:5px;overflow:hidden}.meter i{display:block;height:100%;background:var(--acc);transition:width .5s}
+.sys dl{display:grid;grid-template-columns:110px 1fr;gap:4px 8px;margin:0}.sys dt{color:var(--mut)}.sys dd{margin:0}
+canvas.paint{flex:1;min-height:0;width:100%;background:#fff;touch-action:none;cursor:crosshair}
+/* settings */
+.set{flex:1;display:flex;min-height:0}
+.nav{width:130px;flex:none;background:var(--tool);border-right:1px solid var(--line);padding:6px;display:flex;flex-direction:column;gap:2px}
+.nav button{text-align:left;padding:7px 10px;border:0;border-radius:5px;background:none;color:var(--text);cursor:pointer}
+.nav button.on{background:var(--soft);font-weight:600}
+.pane{flex:1;overflow:auto;padding:14px;display:grid;gap:10px;align-content:start}
+.pane h3,.pane p,.setup h2,.setup p{margin:0}.pane h3{font-size:16px}
+.swgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.sw{display:grid;gap:6px;padding:8px;border:2px solid var(--line);border-radius:8px;background:var(--field);color:var(--text);cursor:pointer;text-align:left}
+.sw.on{border-color:var(--acc2)}.chips{display:flex;height:22px;border-radius:4px;overflow:hidden}.chips span{flex:1}
+.danger{border:1px solid #b3392f;border-radius:8px;padding:12px;display:grid;gap:8px}
+.err{color:#e0584d;margin:0;min-height:1.2em;font-size:13px}.ok{color:#3f9d63;margin:0;min-height:1.2em;font-size:13px}
+.f{display:grid;gap:4px;font-size:13px;color:var(--mut)}
+.btns{display:flex;justify-content:space-between;gap:8px}
+/* full-screen states: boot, setup, login, off */
+#screen{position:fixed;inset:0;z-index:1000000;display:none;align-items:center;justify-content:center;user-select:none}
+#screen.on{display:flex}
+#screen.black{background:#000;color:#cfd8dc}
+#screen.setupbg{background:radial-gradient(900px 600px at 80% 10%,var(--glow) 0,transparent 60%),var(--ink)}
+.boot{display:grid;gap:18px;justify-items:center;color:#e8eef0}
+.boot h1{margin:0;font-size:30px;letter-spacing:.04em;font-weight:700;animation:rise .8s both}
+.boot p{margin:0;color:#8a979c;font-size:13px;height:1.2em}
+.logo{display:grid;grid-template-columns:repeat(2,26px);gap:6px}
+.logo i{width:26px;height:26px;border-radius:5px;background:#26323a;animation:lit 1.6s infinite}
+.logo i:nth-child(2){animation-delay:.2s}.logo i:nth-child(4){animation-delay:.4s}.logo i:nth-child(3){animation-delay:.6s}
+.prog{width:220px;height:4px;background:#ffffff1f;border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--acc2);transition:width .6s ease}
+.setup .prog{background:var(--line);width:100%}
+@keyframes lit{0%,100%{background:#26323a}30%,60%{background:var(--acc2)}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.setup{width:min(430px,92vw);max-height:92vh;overflow:auto;background:var(--paper);color:var(--text);border-radius:10px;padding:24px;box-shadow:0 20px 50px #0008;display:grid;gap:12px;user-select:text}
+.setup h2{font-size:20px}
+ul.steps{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+ul.steps li::before{content:'○';margin-right:8px;color:var(--mut)}
+ul.steps li.cur::before{content:'◐';color:var(--acc2)}ul.steps li.done::before{content:'●';color:var(--acc)}
+.login{width:min(320px,90vw);display:grid;gap:12px;text-align:center;justify-items:center;color:#f1f6f7}
+.login h2{margin:0}.login .in,.login .btn.pri{width:100%}.login .btns{width:100%}
+.av{width:84px;height:84px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-size:34px;font-weight:600}
+.msgscr{display:grid;gap:10px;justify-items:center;text-align:center;max-width:420px;padding:20px}.msgscr h2,.msgscr p{margin:0}
+.msgscr p{color:#9aa7ac}
+.off{display:grid;gap:14px;justify-items:center}
+.dot{display:inline-block;width:10px;height:10px;margin:0 5px;border-radius:50%;border:1px solid #333}.dot.on{background:#8a949a;border-color:#8a949a}
+.hint{margin:0;color:#4b555a;font-size:13px}
+@media (prefers-reduced-motion:reduce){.logo i,.boot h1{animation:none}.prog i{transition:none}}
+@media (max-width:700px){.nav{width:104px}}
+
+/* ---------- LanPC App Store (add-on) ---------- */
+.store{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--field);color:var(--text)}
+.storebar{display:flex;gap:7px;align-items:center;padding:8px;border-bottom:1px solid var(--line);background:var(--tool);flex-wrap:wrap}
+.storebar .in{flex:1;min-width:150px}
+.storetabs{display:flex;gap:5px;padding:8px 8px 0;background:var(--tool)}
+.storetab{border:1px solid var(--line);background:var(--field);color:var(--text);border-radius:6px 6px 0 0;padding:6px 12px;cursor:pointer}
+.storetab.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.storegrid{flex:1;overflow:auto;padding:10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:10px;align-content:start}
+.storecard{border:1px solid var(--line);border-radius:9px;background:var(--field);padding:10px;display:grid;gap:7px;box-shadow:0 2px 8px #0001}
+.storecard .shead{display:flex;gap:9px;align-items:center}
+.storecard .sicon{font-size:34px;width:42px;text-align:center}
+.storecard h3{margin:0;font-size:15px}
+.storecard p{margin:0;color:var(--mut);font-size:12px;min-height:34px}
+.storecard .smeta{display:flex;justify-content:space-between;color:var(--mut);font-size:11px}
+.storecard .sactions{display:flex;gap:6px}
+.storecard .sactions .btn{flex:1}
+.storeempty{padding:20px;color:var(--mut);text-align:center;grid-column:1/-1}
+.gamepad{display:grid;gap:8px;padding:10px;overflow:auto;flex:1}
+.gamegrid{display:grid;gap:6px;justify-content:center}
+.gamecell{width:58px;height:58px;border:1px solid var(--line);border-radius:6px;background:var(--field);color:var(--text);font-size:24px;cursor:pointer}
+.gamecell:hover{background:var(--hover)}
+.gameinfo{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.gamecanvas{display:block;margin:auto;max-width:100%;background:#081015;border:1px solid var(--line);touch-action:none}
+.gamekeys{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.gamekeys button{min-width:44px;height:38px}
+.todoitem{display:flex;gap:8px;align-items:center;padding:7px 10px;border-bottom:1px solid var(--line)}
+.todoitem span{flex:1}.todoitem.done span{text-decoration:line-through;color:var(--mut)}
+.clockbig{text-align:center;font-size:42px;font-weight:700;padding:25px 10px 5px}
+.clockdate{text-align:center;color:var(--mut);padding-bottom:18px}
+.colorpreview{height:130px;border-radius:8px;border:1px solid var(--line);display:grid;place-items:center;font-weight:700}
+
+</style>
+</head>
+<body>
+<div id="icons"></div>
+<div id="start"></div>
+<div id="bar"><button class="go" id="gobtn">Apps</button><div id="tasks"></div><div id="clock"></div></div>
+<div id="screen"></div>
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const el = (t, a = {}, ...k) => {
+  const e = document.createElement(t);
+  for (const [x, v] of Object.entries(a)) x.startsWith('on') ? e.addEventListener(x.slice(2), v) : x === 'class' ? e.className = v : e.setAttribute(x, v);
+  k.flat().forEach(c => e.append(c)); return e;
+};
+const fmtSize = n => n < 1024 ? n + ' B' : n < 1048576 ? (n / 1024).toFixed(1) + ' KB' : (n / 1048576).toFixed(1) + ' MB';
+const TEXT = /\.(txt|md|json|csv|js|css|html|log|py|sh|xml|yml|yaml|ini)$/i;
+
+// ---------- Themes ----------
+const THEMES = {
+  teal: { n: 'Teal', c: ['#12222b', '#eef1f1', '#2c6e73'] }, midnight: { n: 'Midnight', c: ['#0a0e1a', '#151a2b', '#5b7cff'] },
+  graphite: { n: 'Graphite', c: ['#17181a', '#24262a', '#6c7a89'] }, paper: { n: 'Paper', c: ['#4d6571', '#fafafa', '#3f6fb5'] },
+  forest: { n: 'Forest', c: ['#10211a', '#eef2ec', '#3a7d52'] }, rose: { n: 'Rose', c: ['#2a1520', '#f6eef1', '#b04a7a'] }
+};
+function applyTheme(t) { if (!THEMES[t]) t = 'teal'; document.documentElement.dataset.theme = t; localStorage.setItem('theme', t); }
+applyTheme(localStorage.getItem('theme') || 'teal');
+function themeGrid(cur, pick) {
+  const g = el('div', { class: 'swgrid' });
+  const draw = t => g.replaceChildren(...Object.entries(THEMES).map(([k, v]) =>
+    el('button', { class: 'sw' + (k === t ? ' on' : ''), onclick: () => { pick(k); draw(k); } }, el('span', { class: 'chips' }, v.c.map(c => el('span', { style: 'background:' + c }))), v.n)));
+  draw(cur); return g;
+}
+
+// ---------- Session + API ----------
+let token = sessionStorage.getItem('token') || '', me = 'guest', acct = '';
+const withTok = u => u + (u.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(token);
+const setToken = t => { token = t; sessionStorage.setItem('token', t); };
+async function api(url, opt) {
+  const r = await fetch(withTok(url), opt);
+  if (r.status === 401) { clearSession(); const st = await fetchStatus(); st ? (st.installed ? login(st) : installer()) : serverDown(); throw new Error('Signed out'); }
+  if (!r.ok) throw new Error(await r.text());
+  return r;
+}
+const post = (u, d) => api(u, { method: 'POST', body: JSON.stringify(d || {}) }).then(r => r.json());
+const fileUrl = (p, dl) => withTok('/api/file?path=' + encodeURIComponent(p) + (dl ? '&dl=1' : ''));
+const join = (a, b) => (a ? a + '/' : '') + b;
+async function fetchStatus() { try { return await (await fetch(withTok('/api/status'))).json(); } catch (e) { return null; } }
+function clearSession() { token = ''; sessionStorage.removeItem('token'); closeAll(); $('#start').classList.remove('open'); document.body.classList.remove('desk-on'); }
+
+// ---------- Window manager ----------
+let zTop = 10, wid = 0;
+const wins = new Set();
+const closeAll = () => [...wins].forEach(w => w.close());
+function focusWin(w) { wins.forEach(x => { x.el.classList.toggle('on', x === w); x.task.classList.toggle('on', x === w); }); w.el.style.zIndex = ++zTop; }
+function openApp(app, opts = {}) {
+  const id = ++wid;
+  const win = el('div', { class: 'win', style: `left:${90 + (id % 8) * 28}px;top:${40 + (id % 8) * 28}px;width:${app.w || 520}px;height:${app.h || 380}px` });
+  const body = el('div', { class: 'body' });
+  const title = el('span', { class: 't' }, app.icon + '  ' + app.name);
+  const w = { el: win, task: el('button', { class: 'task' }, app.name), cleanup: null };
+  const close = () => { w.cleanup && w.cleanup(); win.remove(); w.task.remove(); wins.delete(w); };
+  w.close = close;
+  const minimize = () => { win.classList.add('min'); w.task.classList.remove('on'); win.classList.remove('on'); };
+  const toggleMax = () => win.classList.toggle('max');
+  const tb = el('div', { class: 'tb', ondblclick: toggleMax }, title,
+    el('button', { title: 'Minimize', onclick: e => { e.stopPropagation(); minimize(); } }, '–'),
+    el('button', { title: 'Maximize', onclick: e => { e.stopPropagation(); toggleMax(); } }, '□'),
+    el('button', { class: 'x', title: 'Close', onclick: e => { e.stopPropagation(); close(); } }, '×'));
+  win.append(tb, body); document.body.append(win); wins.add(w);
+  $('#tasks').append(w.task);
+  w.task.onclick = () => { if (win.classList.contains('min')) { win.classList.remove('min'); focusWin(w); } else if (win.classList.contains('on')) minimize(); else focusWin(w); };
+  win.addEventListener('pointerdown', () => focusWin(w));
+  tb.addEventListener('pointerdown', e => {
+    if (e.target.tagName === 'BUTTON' || win.classList.contains('max')) return;
+    const dx = e.clientX - win.offsetLeft, dy = e.clientY - win.offsetTop;
+    tb.setPointerCapture(e.pointerId);
+    const mv = ev => { win.style.left = Math.max(-200, ev.clientX - dx) + 'px'; win.style.top = Math.max(0, Math.min(innerHeight - 80, ev.clientY - dy)) + 'px'; };
+    const up = () => { tb.removeEventListener('pointermove', mv); tb.removeEventListener('pointerup', up); };
+    tb.addEventListener('pointermove', mv); tb.addEventListener('pointerup', up);
+  });
+  if (innerWidth < 700) win.classList.add('max');
+  w.setTitle = t => { title.textContent = app.icon + '  ' + t; w.task.textContent = t; };
+  focusWin(w);
+  app.open(body, w, opts);
+  return w;
+}
+
+// ---------- Apps ----------
+const Apps = {};
+
+Apps.files = { name: 'Files', icon: '📁', w: 480, h: 420, open(body, w, opts) {
+  let cwd = opts.path || '';
+  const crumb = el('span', { style: 'flex:1;overflow:hidden;text-overflow:ellipsis' });
+  const list = el('div', { class: 'list' });
+  const upload = el('input', { type: 'file', multiple: '', style: 'display:none' });
+  const load = async () => {
+    crumb.textContent = '/' + cwd;
+    try {
+      const items = await (await api('/api/files?path=' + encodeURIComponent(cwd))).json();
+      list.replaceChildren(...(items.length ? items.map(i => el('div', { class: 'row', onclick: () => open(i) },
+        el('span', {}, i.dir ? '📁' : '📄'), el('span', { class: 'n' }, i.name),
+        el('span', { class: 'm' }, i.dir ? '' : fmtSize(i.size)),
+        el('button', { class: 'd', title: 'Delete', onclick: async e => { e.stopPropagation(); if (confirm('Delete ' + i.name + '?')) { await api('/api/file?path=' + encodeURIComponent(join(cwd, i.name)), { method: 'DELETE' }); load(); } } }, '×')))
+        : [el('div', { class: 'row m' }, 'This folder is empty. Upload a file or create a note.')]));
+    } catch (e) { list.textContent = e.message; }
+  };
+  const open = i => {
+    const p = join(cwd, i.name);
+    if (i.dir) { cwd = p; load(); }
+    else if (TEXT.test(i.name)) openApp(Apps.notepad, { path: p });
+    else if (/\.(png|jpe?g|gif|svg)$/i.test(i.name)) openApp(Apps.viewer, { path: p });
+    else window.open(fileUrl(p, true));
+  };
+  upload.onchange = async () => {
+    for (const f of upload.files) await api('/api/file?path=' + encodeURIComponent(join(cwd, f.name)), { method: 'PUT', body: f });
+    upload.value = ''; load();
+  };
+  body.append(el('div', { class: 'tool' },
+    el('button', { class: 'btn', onclick: () => { cwd = cwd.split('/').slice(0, -1).join('/'); load(); } }, '↑ Up'), crumb,
+    el('button', { class: 'btn', onclick: async () => { const n = prompt('Folder name:'); if (n) { await api('/api/mkdir?path=' + encodeURIComponent(join(cwd, n)), { method: 'POST' }); load(); } } }, 'New folder'),
+    el('button', { class: 'btn pri', onclick: () => upload.click() }, 'Upload')), list, upload);
+  const t = setInterval(load, 5000); w.cleanup = () => clearInterval(t); load();
+} };
+
+Apps.viewer = { name: 'Viewer', icon: '🖼️', w: 520, h: 400, open(body, w, o) {
+  w.setTitle(o.path.split('/').pop());
+  body.append(el('div', { style: 'flex:1;overflow:auto;display:grid;place-items:center;background:#222' }, el('img', { src: fileUrl(o.path), style: 'max-width:100%;max-height:100%' })));
+} };
+
+Apps.notepad = { name: 'Notepad', icon: '📝', w: 480, h: 360, open(body, w, o) {
+  const name = el('input', { class: 'in', style: 'flex:1', value: o.path || 'note.txt', placeholder: 'path/in/shared/file.txt' });
+  const ta = el('textarea', { class: 'pad', spellcheck: 'false' });
+  const status = el('span', { class: 'm' });
+  const save = async () => { try { await api('/api/file?path=' + encodeURIComponent(name.value), { method: 'PUT', body: ta.value }); status.textContent = 'Saved'; w.setTitle(name.value.split('/').pop()); } catch (e) { status.textContent = e.message; } };
+  body.append(el('div', { class: 'tool' }, name, el('button', { class: 'btn pri', onclick: save }, 'Save'), status), ta);
+  ta.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); save(); } });
+  if (o.path) { w.setTitle(o.path.split('/').pop()); api('/api/file?path=' + encodeURIComponent(o.path)).then(r => r.text()).then(t => ta.value = t); }
+} };
+
+Apps.chat = { name: 'LAN Chat', icon: '💬', w: 400, h: 460, open(body, w) {
+  const msgs = el('div', { class: 'msgs' }), inp = el('input', { class: 'in', style: 'flex:1', placeholder: 'Message everyone on the LAN' });
+  const send = async () => { const t = inp.value.trim(); if (!t) return; inp.value = ''; await post('/api/chat', { name: me, text: t }); };
+  inp.onkeydown = e => { if (e.key === 'Enter') send(); };
+  body.append(msgs, el('div', { class: 'tool' }, inp, el('button', { class: 'btn pri', onclick: send }, 'Send')));
+  const es = new EventSource(withTok('/api/chat/stream'));
+  es.onmessage = e => {
+    const m = JSON.parse(e.data);
+    msgs.append(el('div', { class: 'msg' + (m.name === me ? ' me' : '') }, el('small', {}, m.name + ' · ' + new Date(m.t).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })), m.text));
+    msgs.scrollTop = msgs.scrollHeight;
+  };
+  w.cleanup = () => es.close();
+} };
+
+Apps.calc = { name: 'Calculator', icon: '🧮', w: 260, h: 340, open(body) {
+  const out = el('output', {}, '0'); let expr = '';
+  const keys = ['C', '(', ')', '/', '7', '8', '9', '*', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '⌫', '='];
+  const press = k => {
+    if (k === 'C') expr = ''; else if (k === '⌫') expr = expr.slice(0, -1);
+    else if (k === '=') { try { if (!/^[0-9+\-*/().\s]+$/.test(expr)) throw 0; expr = String(Function('"use strict";return(' + expr + ')')()); } catch { expr = ''; out.textContent = 'Error'; return; } }
+    else expr += k;
+    out.textContent = expr || '0';
+  };
+  body.append(el('div', { class: 'calc' }, out, keys.map(k => el('button', { class: k === '=' ? 'eq' : '+-*/'.includes(k) ? 'op' : '', onclick: () => press(k) }, k))));
+} };
+
+Apps.term = { name: 'Terminal', icon: '⌨️', w: 540, h: 340, open(body) {
+  let cwd = ''; const out = el('div', {}), inp = el('input', { spellcheck: 'false', autocomplete: 'off' });
+  const prompt$ = () => `${me}@lanpc:/${cwd}$`;
+  const line = el('div', { class: 'ln' }, el('span', {}, ''), inp);
+  const term = el('div', { class: 'term', onclick: () => inp.focus() }, out, line); body.append(term);
+  const print = t => { out.append(document.createTextNode(t + '\n')); };
+  const setPrompt = () => line.firstChild.textContent = prompt$();
+  const resolve = p => { const parts = (p && p.startsWith('/') ? [] : cwd.split('/').filter(Boolean)); (p || '').split('/').forEach(s => { if (s === '..') parts.pop(); else if (s && s !== '.') parts.push(s); }); return parts.join('/'); };
+  const cmds = {
+    help: () => print('help ls cd pwd cat echo mkdir rm date whoami info clear\n(Virtual terminal: it only touches the shared folder, never the host shell.)'),
+    pwd: () => print('/' + cwd), date: () => print(new Date().toString()), whoami: () => print(me),
+    echo: a => print(a.join(' ')), clear: () => out.replaceChildren(),
+    ls: async a => { const items = await (await api('/api/files?path=' + encodeURIComponent(resolve(a[0])))).json(); print(items.map(i => i.dir ? i.name + '/' : i.name).join('  ') || '(empty)'); },
+    cd: async a => { const p = resolve(a[0]); await api('/api/files?path=' + encodeURIComponent(p)); cwd = p; },
+    cat: async a => print(await (await api('/api/file?path=' + encodeURIComponent(resolve(a[0])))).text()),
+    mkdir: async a => { await api('/api/mkdir?path=' + encodeURIComponent(resolve(a[0])), { method: 'POST' }); },
+    rm: async a => { await api('/api/file?path=' + encodeURIComponent(resolve(a[0])), { method: 'DELETE' }); },
+    info: async () => { const i = await (await api('/api/info')).json(); print(`${i.host} (${i.platform})\ncpu ${i.cpu}% · ${i.cores} cores · ${i.online} chat client(s) online\n${i.ips.map(x => 'http://' + x + ':' + i.port).join('\n')}`); }
+  };
+  inp.onkeydown = async e => {
+    if (e.key !== 'Enter') return;
+    const v = inp.value.trim(); inp.value = ''; print(prompt$() + ' ' + v);
+    const [c, ...a] = v.split(/\s+/); if (c) { try { cmds[c] ? await cmds[c](a) : print(c + ': command not found (try help)'); } catch (er) { print('error: ' + (er.message || 'failed')); } }
+    setPrompt(); term.scrollTop = term.scrollHeight;
+  };
+  setPrompt(); print('LanPC terminal. Type help.'); setTimeout(() => inp.focus(), 50);
+} };
+
+Apps.sys = { name: 'System', icon: '📊', w: 380, h: 340, open(body, w) {
+  const box = el('div', { class: 'sys' }); body.append(box);
+  const bar = p => el('div', { class: 'meter' }, el('i', { style: `width:${p}%` }));
+  const tick = async () => {
+    try {
+      const i = await (await api('/api/info')).json(); const used = i.memTotal - i.memFree, mp = i.memTotal ? Math.round(100 * used / i.memTotal) : 0;
+      const up = Math.floor(i.uptime / 3600) + 'h ' + Math.floor(i.uptime % 3600 / 60) + 'm';
+      box.replaceChildren(
+        el('div', {}, 'CPU ' + i.cpu + '%', bar(i.cpu)), el('div', {}, `Memory ${fmtSize(used)} of ${fmtSize(i.memTotal)}`, bar(mp)),
+        el('dl', {}, el('dt', {}, 'Host'), el('dd', {}, i.host), el('dt', {}, 'System'), el('dd', {}, i.platform), el('dt', {}, 'Cores'), el('dd', {}, String(i.cores)),
+          el('dt', {}, 'Uptime'), el('dd', {}, up), el('dt', {}, 'Chat clients'), el('dd', {}, String(i.online)),
+          el('dt', {}, 'Address'), el('dd', {}, i.ips.map(x => `http://${x}:${i.port}`).join(', ') || 'no LAN address found')));
+    } catch (e) { box.textContent = e.message; }
+  };
+  const t = setInterval(tick, 2000); w.cleanup = () => clearInterval(t); tick();
+} };
+
+Apps.paint = { name: 'Paint', icon: '🎨', w: 520, h: 420, open(body) {
+  const cv = el('canvas', { class: 'paint' }), color = el('input', { type: 'color', value: '#2c6e73' }), size = el('input', { type: 'range', min: 1, max: 30, value: 4 });
+  body.append(el('div', { class: 'tool' }, color, size,
+    el('button', { class: 'btn', onclick: () => { const c = cv.getContext('2d'); c.fillStyle = '#fff'; c.fillRect(0, 0, cv.width, cv.height); } }, 'Clear'),
+    el('button', { class: 'btn pri', onclick: () => cv.toBlob(async b => { const n = 'paint-' + Date.now() + '.png'; await api('/api/file?path=' + n, { method: 'PUT', body: b }); alert('Saved to shared files as ' + n); }) }, 'Save to shared')), cv);
+  const fit = () => { const r = cv.getBoundingClientRect(); if (!r.width) return; const img = cv.width ? cv.getContext('2d').getImageData(0, 0, cv.width, cv.height) : null; cv.width = r.width; cv.height = r.height; const c = cv.getContext('2d'); c.fillStyle = '#fff'; c.fillRect(0, 0, cv.width, cv.height); if (img) c.putImageData(img, 0, 0); };
+  setTimeout(fit, 30); new ResizeObserver(fit).observe(cv);
+  let down = false, last;
+  const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  cv.onpointerdown = e => { down = true; last = pos(e); cv.setPointerCapture(e.pointerId); };
+  cv.onpointerup = () => down = false;
+  cv.onpointermove = e => { if (!down) return; const p = pos(e), c = cv.getContext('2d'); c.strokeStyle = color.value; c.lineWidth = size.value; c.lineCap = 'round'; c.beginPath(); c.moveTo(...last); c.lineTo(...p); c.stroke(); last = p; };
+} };
+
+Apps.settings = { name: 'Settings', icon: '⚙️', w: 580, h: 440, open(body, w, opts) {
+  const pane = el('div', { class: 'pane' });
+  const nav = el('div', { class: 'nav' });
+  const appearance = () => [el('h3', {}, 'Theme'), el('p', { class: 'm' }, 'Applies to the whole desktop, including the sign-in screen.'),
+    themeGrid(document.documentElement.dataset.theme, async k => { applyTheme(k); try { await post('/api/theme', { theme: k }); } catch (e) { alert(e.message); } })];
+  const account = () => {
+    const name = el('input', { class: 'in', value: me, maxlength: 24 }), nsay = el('span', { class: 'm' });
+    const o = el('input', { class: 'in', type: 'password', autocomplete: 'current-password' }), n = el('input', { class: 'in', type: 'password', autocomplete: 'new-password' }), c = el('input', { class: 'in', type: 'password', autocomplete: 'new-password' });
+    const msg = el('p', { class: 'err' });
+    const say = (t, bad) => { msg.className = bad ? 'err' : 'ok'; msg.textContent = t; };
+    const saveName = () => { const v = name.value.trim(); if (!v) return; me = v.slice(0, 24); localStorage.setItem('name', me); buildStart(); nsay.textContent = 'Saved'; };
+    const change = async () => {
+      if (n.value.length < 4) return say('Use a new password with at least 4 characters.', 1);
+      if (n.value !== c.value) return say('The new passwords do not match.', 1);
+      try {
+        const r = await fetch(withTok('/api/password'), { method: 'POST', body: JSON.stringify({ old: o.value, 'new': n.value }) });
+        if (!r.ok) throw new Error(r.status === 403 ? 'Your current password is wrong.' : await r.text());
+        setToken((await r.json()).token); o.value = n.value = c.value = '';
+        say('Password changed. Other devices must sign in again.');
+      } catch (e) { say(e.message, 1); }
+    };
+    return [el('h3', {}, 'Display name'), el('p', { class: 'm' }, `Shown in chat on this device. Account user name: ${acct}.`),
+      el('div', { class: 'tool', style: 'border:0;background:none;padding:0' }, name, el('button', { class: 'btn', onclick: saveName }, 'Save'), nsay),
+      el('h3', { style: 'margin-top:8px' }, 'Change password'),
+      el('label', { class: 'f' }, 'Current password', o), el('label', { class: 'f' }, 'New password', n), el('label', { class: 'f' }, 'Confirm new password', c),
+      msg, el('div', {}, el('button', { class: 'btn pri', onclick: change }, 'Change password'))];
+  };
+  const system = () => [el('h3', {}, 'Power'),
+    el('p', { class: 'm' }, 'Restart and shut down only affect this device. Shutting down needs the Enter key pressed 3 times to turn back on.'),
+    el('div', { class: 'tool', style: 'border:0;background:none;padding:0' }, el('button', { class: 'btn', onclick: restart }, 'Restart'), el('button', { class: 'btn', onclick: shutdown }, 'Shut down')),
+    el('h3', { style: 'margin-top:8px' }, 'Server'),
+    el('p', { class: 'm' }, 'Stopping the server disconnects every device. Start it again on the host machine with python server.py.'),
+    el('div', {}, el('button', { class: 'btn red', onclick: stopServer }, 'Stop server'))];
+  const data = () => {
+    const pw = el('input', { class: 'in', type: 'password', placeholder: 'Your password' }), st = el('p', { class: 'err' });
+    const go = async () => {
+      if (!pw.value) return st.textContent = 'Enter your password to confirm.';
+      if (!confirm('Destroy all data?\n\nThis permanently deletes every shared file, the chat history and your account. It cannot be undone.')) return;
+      try {
+        const r = await fetch(withTok('/api/wipe'), { method: 'POST', body: JSON.stringify({ password: pw.value }) });
+        if (!r.ok) throw new Error(r.status === 403 ? 'Wrong password.' : await r.text());
+        localStorage.removeItem('name'); localStorage.removeItem('off'); clearSession();
+        msgScreen('All data destroyed', 'Your files, chat history and account were deleted. LanPC is restarting into first-time setup.');
+        setTimeout(boot, 2500);
+      } catch (e) { st.textContent = e.message; }
+    };
+    return [el('h3', {}, 'Destroy all data'), el('div', { class: 'danger' },
+      el('p', {}, 'Deletes every file in the shared drive, the chat history and your account. LanPC goes back to first-time setup. This cannot be undone.'),
+      pw, st, el('div', {}, el('button', { class: 'btn red', onclick: go }, 'Destroy all data')))];
+  };
+  const tabs = { Appearance: appearance, Account: account, System: system, Data: data };
+  const pick = k => { [...nav.children].forEach(b => b.classList.toggle('on', b.textContent === k)); pane.replaceChildren(...tabs[k]()); };
+  Object.keys(tabs).forEach(k => nav.append(el('button', { onclick: () => pick(k) }, k)));
+  body.append(el('div', { class: 'set' }, nav, pane));
+  pick(opts.tab || 'Appearance');
+} };
+
+
+// ---------- App Store add-on ----------
+// Everything below is an additive offline Store. Existing LanPC apps/backend are untouched.
+const StoreInstalledKey = 'lanpc.store.installed.v1';
+
+const StoreApps = {
+  clock: {
+    name:'Clock', icon:'🕐', type:'App', size:'0.2 MB',
+    desc:'A clean digital clock with date and seconds.',
+    w:360,h:300,
+    open(body){
+      const big=el('div',{class:'clockbig'}), date=el('div',{class:'clockdate'});
+      body.append(big,date);
+      const tick=()=>{const d=new Date();big.textContent=d.toLocaleTimeString();date.textContent=d.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});};
+      tick(); const t=setInterval(tick,250); body.parentElement?.addEventListener('remove',()=>clearInterval(t));
+    }
+  },
+  todo: {
+    name:'To-Do', icon:'✅', type:'App', size:'0.3 MB',
+    desc:'A simple personal task list saved on this device.',
+    w:420,h:400,
+    open(body){
+      const input=el('input',{class:'in',placeholder:'Add a task…',style:'flex:1'});
+      const list=el('div',{class:'list'}); let items=JSON.parse(localStorage.getItem('lanpc.todo')||'[]');
+      const save=()=>localStorage.setItem('lanpc.todo',JSON.stringify(items));
+      const draw=()=>{list.replaceChildren(...items.map((x,i)=>el('div',{class:'todoitem'+(x.done?' done':'')},
+        el('input',{type:'checkbox',checked:x.done,onchange:()=>{x.done=!x.done;save();draw();}}),
+        el('span',{},x.text),
+        el('button',{class:'btn',onclick:()=>{items.splice(i,1);save();draw();}},'×'))));};
+      const add=()=>{const v=input.value.trim();if(!v)return;items.push({text:v,done:false});input.value='';save();draw();input.focus();};
+      input.onkeydown=e=>{if(e.key==='Enter')add()};
+      body.append(el('div',{class:'tool'},input,el('button',{class:'btn pri',onclick:add},'Add')),list);draw();
+    }
+  },
+  converter: {
+    name:'Unit Converter', icon:'📏', type:'App', size:'0.3 MB',
+    desc:'Convert common length, weight and temperature units.',
+    w:430,h:340,
+    open(body){
+      const value=el('input',{class:'in',type:'number',value:'1'});
+      const from=el('select',{class:'in'}), to=el('select',{class:'in'});
+      const result=el('div',{class:'pane'});
+      const sets={
+        Length:[['Meter','m',1],['Kilometer','km',1000],['Centimeter','cm',.01],['Mile','mi',1609.344],['Foot','ft',.3048]],
+        Weight:[['Gram','g',1],['Kilogram','kg',1000],['Pound','lb',453.59237],['Ounce','oz',28.349523125]],
+        Temperature:[['Celsius','C',1],['Fahrenheit','F',1],['Kelvin','K',1]]
+      };
+      let kind='Length';
+      const kindSel=el('select',{class:'in'},...Object.keys(sets).map(k=>el('option',{value:k},k)));
+      const fill=()=>{from.replaceChildren(...sets[kind].map(x=>el('option',{value:x[1]},x[0])));to.replaceChildren(...sets[kind].map(x=>el('option',{value:x[1]},x[0])));to.selectedIndex=1;calc();};
+      const calc=()=>{
+        const v=Number(value.value)||0,a=from.value,b=to.value;let out=v;
+        if(kind==='Temperature'){let c=a==='C'?v:a==='F'?(v-32)*5/9:v-273.15;out=b==='C'?c:b==='F'?c*9/5+32:c+273.15}
+        else {const list=sets[kind],fa=list.find(x=>x[1]===a)[2],fb=list.find(x=>x[1]===b)[2];out=v*fa/fb}
+        result.replaceChildren(el('h3',{},Number(out.toFixed(8)).toString()),el('p',{class:'m'},from.options[from.selectedIndex]?.text+' → '+to.options[to.selectedIndex]?.text));
+      };
+      kindSel.onchange=()=>{kind=kindSel.value;fill()}; [value,from,to].forEach(x=>x.addEventListener('input',calc)); [from,to].forEach(x=>x.addEventListener('change',calc));
+      body.append(el('div',{class:'tool'},kindSel,value,from,to),result);fill();
+    }
+  },
+  colors: {
+    name:'Color Studio', icon:'🎨', type:'App', size:'0.2 MB',
+    desc:'Pick a color and copy its HEX value.',
+    w:360,h:330,
+    open(body){
+      const picker=el('input',{type:'color',value:'#2c6e73',style:'width:100%;height:55px;border:0;background:none'});
+      const hex=el('input',{class:'in',value:'#2c6e73',readonly:''});
+      const prev=el('div',{class:'colorpreview'},'Color Preview');
+      const copy=async()=>{try{await navigator.clipboard.writeText(hex.value);alert('HEX copied: '+hex.value)}catch{}};
+      const update=()=>{prev.style.background=picker.value;hex.value=picker.value.toUpperCase()};
+      picker.oninput=update; body.append(prev,el('div',{class:'tool'},picker,hex,el('button',{class:'btn pri',onclick:copy},'Copy')));update();
+    }
+  },
+  stopwatch: {
+    name:'Stopwatch', icon:'⏱️', type:'App', size:'0.2 MB',
+    desc:'Start, stop and reset a precise stopwatch.',
+    w:340,h:300,
+    open(body){
+      const out=el('div',{class:'clockbig'},'00:00.00');let start=0,elapsed=0,running=false,t;
+      const draw=()=>{const ms=running?elapsed+performance.now()-start:elapsed,s=Math.floor(ms/1000),cs=Math.floor(ms%1000/10);out.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')+'.'+String(cs).padStart(2,'0')};
+      const toggle=()=>{if(running){elapsed+=performance.now()-start;running=false;clearInterval(t)}else{start=performance.now();running=true;t=setInterval(draw,20)}draw()};
+      const reset=()=>{running=false;clearInterval(t);elapsed=0;draw()};
+      body.append(out,el('div',{class:'gamekeys'},el('button',{class:'btn pri',onclick:toggle},'Start / Stop'),el('button',{class:'btn',onclick:reset},'Reset')));
+    }
+  },
+  random: {
+    name:'Random Generator', icon:'🎲', type:'App', size:'0.2 MB',
+    desc:'Generate random numbers, dice rolls and choices.',
+    w:360,h:330,
+    open(body){
+      const out=el('div',{class:'clockbig'},'—');
+      const a=el('input',{class:'in',type:'number',value:'1'}),b=el('input',{class:'in',type:'number',value:'100'});
+      const roll=()=>{let x=Math.min(+a.value||1,+b.value||100),y=Math.max(+a.value||1,+b.value||100);out.textContent=Math.floor(Math.random()*(y-x+1))+x};
+      body.append(out,el('div',{class:'tool'},a,b),el('button',{class:'btn pri',onclick:roll},'Generate'),el('button',{class:'btn',onclick:()=>{out.textContent='🎲 '+(Math.floor(Math.random()*6)+1)}},'Roll Dice'));
+    }
+  },
+
+  snake: {
+    name:'Snake', icon:'🐍', type:'Game', size:'0.4 MB',
+    desc:'Classic Snake. Use the arrow keys to eat food and grow.',
+    w:440,h:500,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'360',height:'360'}),ctx=c.getContext('2d'),score=el('span',{},'Score: 0'),msg=el('span',{class:'m'},'Press an arrow key to start');
+      body.append(el('div',{class:'gameinfo'},score,msg),c,el('div',{class:'gamekeys'},...['←','↑','↓','→'].map(k=>el('button',{class:'btn',onclick:()=>key(k)},k))));
+      let snake,food,dir,next,running=false,timer,sc=0;
+      const reset=()=>{snake=[{x:9,y:9}];food={x:4,y:5};dir={x:0,y:0};next=dir;sc=0;score.textContent='Score: 0';msg.textContent='Press an arrow key to start';running=false;draw()};
+      const key=k=>{const m={'←':[-1,0],'→':[1,0],'↑':[0,-1],'↓':[0,1]}[k];if(!m)return;if(dir.x+m[0]===0&&dir.y+m[1]===0&&running)return;next={x:m[0],y:m[1]};if(!running){running=true;msg.textContent='';clearInterval(timer);timer=setInterval(step,110)}};
+      document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))key({'ArrowLeft':'←','ArrowRight':'→','ArrowUp':'↑','ArrowDown':'↓'}[e.key])});
+      const draw=()=>{ctx.clearRect(0,0,360,360);ctx.fillStyle='#16252a';ctx.fillRect(0,0,360,360);ctx.fillStyle='#6bd36b';snake.forEach(p=>ctx.fillRect(p.x*18+1,p.y*18+1,16,16));ctx.fillStyle='#e85d5d';ctx.fillRect(food.x*18+2,food.y*18+2,14,14)};
+      const step=()=>{dir=next;const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(h.x<0||h.x>=20||h.y<0||h.y>=20||snake.some(p=>p.x===h.x&&p.y===h.y)){clearInterval(timer);running=false;msg.textContent='Game over — press an arrow key to restart';return}snake.unshift(h);if(h.x===food.x&&h.y===food.y){sc++;score.textContent='Score: '+sc;do{food={x:Math.floor(Math.random()*20),y:Math.floor(Math.random()*20)}}while(snake.some(p=>p.x===food.x&&p.y===food.y))}else snake.pop();draw()};
+      reset();
+    }
+  },
+  ttt: {
+    name:'Tic-Tac-Toe', icon:'❌', type:'Game', size:'0.2 MB',
+    desc:'Play Tic-Tac-Toe against a simple computer opponent.',
+    w:380,h:430,
+    open(body){
+      const status=el('div',{class:'gameinfo'},el('b',{},'Your turn'),el('button',{class:'btn',onclick:reset},'New Game'));
+      const grid=el('div',{class:'gamegrid',style:'grid-template-columns:repeat(3,58px)'});
+      let b=Array(9).fill(''),over=false;
+      const win=x=>[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(a=>a.every(i=>x[i]===x[a[0]]&&x[i]));
+      const reset=()=>{b=Array(9).fill('');over=false;status.firstChild.textContent='Your turn';draw()};
+      const ai=()=>{const free=b.map((x,i)=>x?null:i).filter(x=>x!==null);if(!free.length)return;const i=free[Math.floor(Math.random()*free.length)];b[i]='O';if(win(b)){over=true;status.firstChild.textContent='Computer wins'}else if(b.every(Boolean)){over=true;status.firstChild.textContent='Draw'}else status.firstChild.textContent='Your turn';draw()};
+      const move=i=>{if(over||b[i])return;b[i]='X';if(win(b)){over=true;status.firstChild.textContent='You win!';draw();return}if(b.every(Boolean)){over=true;status.firstChild.textContent='Draw';draw();return}draw();setTimeout(ai,250)};
+      const draw=()=>{grid.replaceChildren(...b.map((x,i)=>el('button',{class:'gamecell',onclick:()=>move(i)},x)));};
+      body.append(status,grid);reset();
+    }
+  },
+  memory: {
+    name:'Memory Match', icon:'🧠', type:'Game', size:'0.3 MB',
+    desc:'Match all the pairs with as few moves as possible.',
+    w:430,h:500,
+    open(body){
+      const info=el('div',{class:'gameinfo'},el('span',{},'Moves: 0'),el('button',{class:'btn',onclick:reset},'New Game'));
+      const grid=el('div',{class:'gamegrid',style:'grid-template-columns:repeat(4,58px)'});let vals=[],open=[],moves=0,locked=false;
+      const reset=()=>{vals=['🚗','🏁','🚓','🔥','⭐','🎮','🏎️','🌙'];vals=[...vals,...vals].sort(()=>Math.random()-.5);open=[];moves=0;locked=false;draw()};
+      const click=i=>{if(locked||open.includes(i)||grid.children[i].dataset.done)return;open.push(i);draw();if(open.length===2){moves++;info.firstChild.textContent='Moves: '+moves;locked=true;setTimeout(()=>{if(vals[open[0]]===vals[open[1]]){open.forEach(j=>grid.children[j].dataset.done='1');}open=[];locked=false;draw()},600)}};
+      const draw=()=>{grid.replaceChildren(...vals.map((v,i)=>el('button',{class:'gamecell',onclick:()=>click(i)},(open.includes(i)||grid.children[i]?.dataset.done)?v:'?')))};
+      body.append(info,grid);reset();
+    }
+  },
+  pong: {
+    name:'Pong', icon:'🏓', type:'Game', size:'0.4 MB',
+    desc:'Classic Pong. Move your paddle with W/S or the mouse.',
+    w:500,h:440,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'460',height:'300'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'W/S or mouse to move',el('button',{class:'btn',onclick:reset},'Reset'));
+      body.append(info,c);let py=125,ball={x:230,y:150,vx:4,vy:3},ai=125,score=[0,0],timer;
+      const reset=()=>{py=125;ai=125;ball={x:230,y:150,vx:4*(Math.random()<.5?1:-1),vy:3};score=[0,0];clearInterval(timer);timer=setInterval(step,16);draw()};
+      document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='w')py=Math.max(0,py-12);if(e.key.toLowerCase()==='s')py=Math.min(250,py+12)});
+      c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();py=Math.max(0,Math.min(250,(e.clientY-r.top)*300/r.height-25))});
+      const step=()=>{ball.x+=ball.vx;ball.y+=ball.vy;if(ball.y<6||ball.y>294)ball.vy*=-1;ai+=((ball.y-25)-ai)*.06;
+        if(ball.x<25&&ball.x>15&&ball.y>py&&ball.y<py+50){ball.vx=Math.abs(ball.vx);ball.vy+=(ball.y-(py+25))*.08}
+        if(ball.x>435&&ball.x<445&&ball.y>ai&&ball.y<ai+50){ball.vx=-Math.abs(ball.vx)}
+        if(ball.x<0){score[1]++;ball={x:230,y:150,vx:4,vy:3}} if(ball.x>460){score[0]++;ball={x:230,y:150,vx:-4,vy:3}} draw()};
+      const draw=()=>{ctx.clearRect(0,0,460,300);ctx.fillStyle='#0b1418';ctx.fillRect(0,0,460,300);ctx.fillStyle='#fff';ctx.fillRect(15,py,10,50);ctx.fillRect(435,ai,10,50);ctx.beginPath();ctx.arc(ball.x,ball.y,6,0,Math.PI*2);ctx.fill();ctx.font='22px system-ui';ctx.fillText(score[0]+'   '+score[1],195,30)};
+      reset();
+    }
+  },
+  clicker: {
+    name:'Speed Clicker', icon:'🖱️', type:'Game', size:'0.2 MB',
+    desc:'How many times can you click in ten seconds?',
+    w:360,h:330,
+    open(body){
+      const out=el('div',{class:'clockbig'},'10.0'),score=el('h2',{},'Clicks: 0'),go=el('button',{class:'btn pri',style:'font-size:24px;padding:20px'},'START');
+      let n=0,left=10,timer,active=false;
+      go.onclick=()=>{if(active){n++;score.textContent='Clicks: '+n;return}n=0;left=10;active=true;score.textContent='Clicks: 0';go.textContent='CLICK!';clearInterval(timer);timer=setInterval(()=>{left-=.1;out.textContent=Math.max(0,left).toFixed(1);if(left<=0){clearInterval(timer);active=false;go.textContent='START AGAIN'}},100)};
+      body.append(out,score,go);
+    }
+  }
+};
+
+function storeInstalled(){
+  try{return JSON.parse(localStorage.getItem(StoreInstalledKey)||'[]').filter(id=>StoreApps[id])}catch{return[]}
+}
+function saveStoreInstalled(a){localStorage.setItem(StoreInstalledKey,JSON.stringify(a))}
+function storeInstall(id){
+  const a=storeInstalled(); if(!a.includes(id))a.push(id); saveStoreInstalled(a);
+  refreshStoreDesktop(); buildStart();
+}
+function storeUninstall(id){
+  saveStoreInstalled(storeInstalled().filter(x=>x!==id)); refreshStoreDesktop(); buildStart();
+}
+function refreshStoreDesktop(){
+  const box=$('#icons'); if(!box)return;
+  box.querySelectorAll('[data-store-app]').forEach(x=>x.remove());
+  storeInstalled().forEach(id=>{const a=StoreApps[id];box.append(el('button',{class:'icon','data-store-app':id,onclick:()=>openApp(a)},el('b',{},a.icon),el('span',{},a.name)))});
+}
+function openStoreItem(id){openApp(StoreApps[id])}
+
+Apps.store = {name:'App Store',icon:'🛍️',w:720,h:520,open(body,w){
+  let category='All', query='';
+  const search=el('input',{class:'in',placeholder:'Search apps and games…'});
+  const grid=el('div',{class:'storegrid'});
+  const tabs=el('div',{class:'storetabs'});
+  const cats=['All','App','Game'];
+  const render=()=>{
+    const installed=storeInstalled();
+    const list=Object.entries(StoreApps).filter(([id,a])=>(category==='All'||a.type===category)&&(!query||a.name.toLowerCase().includes(query.toLowerCase())||a.desc.toLowerCase().includes(query.toLowerCase())));
+    grid.replaceChildren(...(list.length?list.map(([id,a])=>{
+      const is=installed.includes(id);
+      return el('div',{class:'storecard'},
+        el('div',{class:'shead'},el('div',{class:'sicon'},a.icon),el('div',{},el('h3',{},a.name),el('div',{class:'m'},a.type))),
+        el('p',{},a.desc),
+        el('div',{class:'smeta'},el('span',{},a.size),el('span',{},is?'Installed':'Offline package')),
+        el('div',{class:'sactions'},
+          is?el('button',{class:'btn pri',onclick:()=>openStoreItem(id)},'Open'):el('button',{class:'btn pri',onclick:()=>{storeInstall(id);render()}},'Download & Install'),
+          is?el('button',{class:'btn',onclick:()=>{if(confirm('Remove '+a.name+' from this device?')){storeUninstall(id);render()}}},'Remove'):el('button',{class:'btn',onclick:()=>{alert(a.name+' is included in this LanPC App Store package and works offline.')}},'Details')
+        )
+      )
+    }):[el('div',{class:'storeempty'},'No matching apps or games.')]));
+  };
+  tabs.replaceChildren(...cats.map(c=>el('button',{class:'storetab'+(c===category?' on':''),onclick:()=>{category=c;tabs.querySelectorAll('button').forEach(b=>b.classList.remove('on'));event.currentTarget.classList.add('on');render()}},c==='App'?'Apps':c==='Game'?'Games':'All')));
+  search.oninput=()=>{query=search.value;render()};
+  body.append(el('div',{class:'storebar'},el('b',{},'LanPC App Store'),search),tabs,grid);
+  render();
+}};
+
+
+// ---------- Full-screen states ----------
+const scr = $('#screen');
+const show = (node, cls = '') => { scr.className = 'on ' + cls; scr.replaceChildren(node); };
+const hideScreen = () => { scr.className = ''; scr.replaceChildren(); };
+const msgScreen = (title, text, ...btns) => show(el('div', { class: 'msgscr' }, el('h2', {}, title), el('p', {}, text), btns), 'black');
+const serverDown = () => msgScreen("Can't reach LanPC", 'The server is not responding. Check that it is running on the host machine.', el('button', { class: 'btn', onclick: boot }, 'Try again'));
+
+function bootAnim() {
+  const bar = el('i'), msg = el('p', {});
+  show(el('div', { class: 'boot' }, el('div', { class: 'logo' }, el('i'), el('i'), el('i'), el('i')), el('h1', {}, 'LanPC'), el('div', { class: 'prog' }, bar), msg), 'black');
+  const steps = ['Starting network', 'Mounting shared drive', 'Loading apps', 'Preparing desktop'];
+  return new Promise(res => {
+    let i = 0;
+    const tick = () => { if (i >= steps.length) return setTimeout(res, 300); msg.textContent = steps[i] + '…'; bar.style.width = ((i + 1) / steps.length * 100) + '%'; i++; setTimeout(tick, 700); };
+    setTimeout(tick, 500);
+  });
+}
+
+async function boot() {
+  clearSession();
+  if (localStorage.getItem('off') === '1') return powerOffScreen();
+  const [st] = await Promise.all([fetchStatus(), bootAnim()]);
+  if (!st) return serverDown();
+  if (!st.installed) return installer();
+  applyTheme(st.theme);
+  st.authed ? enterDesktop(st) : login(st);
+}
+
+function enterDesktop(st) {
+  applyTheme(st.theme); acct = st.user; me = (localStorage.getItem('name') || st.user || 'guest').slice(0, 24);
+  buildStart(); refreshStoreDesktop(); hideScreen(); document.body.classList.add('desk-on');
+}
+
+function login(st) {
+  const p = el('input', { class: 'in', type: 'password', placeholder: 'Password', autocomplete: 'current-password' }), err = el('p', { class: 'err' });
+  const go = async () => {
+    err.textContent = '';
+    try {
+      const r = await fetch('/api/login', { method: 'POST', body: JSON.stringify({ password: p.value }) });
+      if (!r.ok) throw new Error(r.status === 403 ? 'Wrong password.' : await r.text());
+      setToken((await r.json()).token); enterDesktop(st);
+    } catch (e) { err.textContent = e.message; p.select(); }
+  };
+  p.onkeydown = e => { if (e.key === 'Enter') go(); };
+  show(el('div', { class: 'login' }, el('div', { class: 'av' }, (st.user || '?')[0].toUpperCase()), el('h2', {}, st.user), p, err,
+    el('button', { class: 'btn pri', onclick: go }, 'Sign in'),
+    el('div', { class: 'btns' }, el('button', { class: 'btn', onclick: restart }, 'Restart'), el('button', { class: 'btn', onclick: shutdown }, 'Shut down'))), 'setupbg');
+  setTimeout(() => p.focus(), 50);
+}
+
+function installer() {
+  const d = { user: 'admin', pw: '', theme: localStorage.getItem('theme') || 'teal' };
+  const card = (...k) => show(el('div', { class: 'setup' }, ...k), 'setupbg');
+  const field = (label, input) => el('label', { class: 'f' }, label, input);
+  const welcome = () => card(el('h2', {}, 'Welcome to LanPC'),
+    el('p', {}, 'This is the first start on this machine. Setup creates your account and prepares the shared drive. It takes about a minute.'),
+    el('div', { class: 'btns' }, el('span'), el('button', { class: 'btn pri', onclick: account }, 'Get started')));
+  const account = () => {
+    const u = el('input', { class: 'in', value: d.user, maxlength: 24 }), p = el('input', { class: 'in', type: 'password', placeholder: 'At least 4 characters' }), c = el('input', { class: 'in', type: 'password' }), err = el('p', { class: 'err' });
+    const next = () => {
+      if (!u.value.trim()) return err.textContent = 'Enter a user name.';
+      if (p.value.length < 4) return err.textContent = 'Use a password with at least 4 characters.';
+      if (p.value !== c.value) return err.textContent = 'The passwords do not match.';
+      d.user = u.value.trim(); d.pw = p.value; themeStep();
+    };
+    card(el('h2', {}, 'Create your account'), field('User name', u), field('Password', p), field('Confirm password', c), err,
+      el('div', { class: 'btns' }, el('button', { class: 'btn', onclick: welcome }, 'Back'), el('button', { class: 'btn pri', onclick: next }, 'Next')));
+    [u, p, c].forEach(i => i.onkeydown = e => { if (e.key === 'Enter') next(); }); u.focus();
+  };
+  const themeStep = () => card(el('h2', {}, 'Choose a theme'), el('p', { class: 'm' }, 'You can change it later in Settings.'),
+    themeGrid(d.theme, k => { d.theme = k; applyTheme(k); }),
+    el('div', { class: 'btns' }, el('button', { class: 'btn', onclick: account }, 'Back'), el('button', { class: 'btn pri', onclick: installing }, 'Install')));
+  const installing = async () => {
+    const steps = ['Creating your account', 'Preparing the shared drive', 'Writing system files', 'Applying your theme'];
+    const list = el('ul', { class: 'steps' }, steps.map(s => el('li', {}, s))), bar = el('i'), status = el('p', { class: 'err' });
+    const cardEl = el('div', { class: 'setup' }, el('h2', {}, 'Installing LanPC'), list, el('div', { class: 'prog' }, bar), status);
+    show(cardEl, 'setupbg');
+    const req = fetch('/api/install', { method: 'POST', body: JSON.stringify({ user: d.user, password: d.pw, theme: d.theme }) })
+      .then(async r => { if (!r.ok) throw new Error(await r.text()); });
+    const lis = [...list.children];
+    const anim = new Promise(res => {
+      let i = 0;
+      const t = () => { if (i > 0) { lis[i - 1].classList.remove('cur'); lis[i - 1].classList.add('done'); } if (i >= lis.length) return res(); lis[i].classList.add('cur'); bar.style.width = ((i + 1) / lis.length * 100) + '%'; i++; setTimeout(t, 900); };
+      t();
+    });
+    try { await Promise.all([req, anim]); }
+    catch (e) { status.textContent = 'Setup failed: ' + e.message; cardEl.append(el('div', {}, el('button', { class: 'btn', onclick: account }, 'Go back'))); return; }
+    cardEl.replaceChildren(el('h2', {}, 'Setup complete'), el('p', {}, 'LanPC is installed. Restart to sign in with your new account.'),
+      el('div', {}, el('button', { class: 'btn pri', onclick: restart }, 'Restart now')));
+  };
+  welcome();
+}
+
+function powerOffScreen() {
+  let n = 0;
+  const dots = [0, 1, 2].map(() => el('span', { class: 'dot' }));
+  show(el('div', { class: 'off' }, el('div', {}, dots), el('p', { class: 'hint' }, 'Press Enter 3 times to turn on')), 'black');
+  const press = () => {
+    n++; dots.forEach((x, i) => x.classList.toggle('on', i < n));
+    if (n >= 3) { off(); localStorage.removeItem('off'); setTimeout(boot, 250); }
+  };
+  const key = e => { if (e.key === 'Enter') { e.preventDefault(); press(); } };
+  const tap = e => { if (e.pointerType === 'touch') press(); };   // touch screens have no Enter key
+  const off = () => { removeEventListener('keydown', key); scr.removeEventListener('pointerdown', tap); };
+  addEventListener('keydown', key); scr.addEventListener('pointerdown', tap);
+}
+
+function restart() { clearSession(); msgScreen('Restarting…', ''); setTimeout(boot, 1300); }
+function shutdown() { clearSession(); localStorage.setItem('off', '1'); msgScreen('Shutting down…', ''); setTimeout(powerOffScreen, 1300); }
+async function stopServer() {
+  if (!confirm('Stop the LanPC server?\n\nEvery device loses access until you start it again on the host machine.')) return;
+  try { await post('/api/shutdown'); } catch (e) { alert(e.message); return; }
+  clearSession();
+  msgScreen('Server stopped', 'The LanPC server has been shut down. To use it again, start it on the host machine with python server.py, then reload this page.',
+    el('button', { class: 'btn', onclick: () => location.reload() }, 'Reload'));
+}
+
+// ---------- Desktop shell ----------
+const launchers = ['files', 'notepad', 'chat', 'term', 'calc', 'paint', 'sys', 'settings', 'store'];
+launchers.forEach(k => $('#icons').append(el('button', { class: 'icon', onclick: () => openApp(Apps[k]) }, el('b', {}, Apps[k].icon), el('span', {}, Apps[k].name))));
+const start = $('#start');
+function buildStart() {
+  const close = f => () => { start.classList.remove('open'); f(); };
+  start.replaceChildren(...launchers.map(k => el('button', { onclick: close(() => openApp(Apps[k])) }, Apps[k].icon, Apps[k].name)),
+    ...storeInstalled().map(id => el('button', { onclick: close(() => openApp(StoreApps[id])) }, StoreApps[id].icon, StoreApps[id].name)), el('hr'),
+    el('button', { onclick: close(() => openApp(Apps.settings, { tab: 'Account' })) }, '👤', 'Signed in as ' + me), el('hr'),
+    el('button', { onclick: close(restart) }, '🔄', 'Restart'),
+    el('button', { onclick: close(shutdown) }, '⏻', 'Shut down'),
+    el('button', { onclick: close(stopServer) }, '🛑', 'Stop server'));
+}
+$('#gobtn').onclick = e => { e.stopPropagation(); start.classList.toggle('open'); };
+document.addEventListener('pointerdown', e => { if (!start.contains(e.target)) start.classList.remove('open'); });
+const clock = () => { const d = new Date(); $('#clock').innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + '<br>' + d.toLocaleDateString([], { day: 'numeric', month: 'short' }); };
+clock(); setInterval(clock, 15000);
+
+boot();
+</script>
+</body>
+</html>

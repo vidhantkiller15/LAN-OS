@@ -2,7 +2,10 @@
 """LanPC server (Python, standard library only).  Run:  python server.py"""
 import hashlib, hmac, json, mimetypes, os, platform, queue, secrets, shutil, socket, threading, time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, urljoin, quote
+import ipaddress, re
+from urllib.request import Request, urlopen
+import userapps
 
 PORT = int(os.environ.get("PORT", 8080))
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -74,6 +77,7 @@ def wipe_everything():
     with lock:
         history.clear()
     tokens.clear()
+    userapps.wipe()
 
 
 # ---------------- system stats ----------------
@@ -157,6 +161,68 @@ def lan_ips():
     return sorted(i for i in ips if not i.startswith("127."))
 
 
+
+def _public_ip(text):
+    try:
+        ip = ipaddress.ip_address(text)
+    except ValueError:
+        return False
+    return not (ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved or ip.is_multicast or ip.is_unspecified)
+
+def public_web_url(raw):
+    u = urlparse(raw if "://" in str(raw) else "https://" + str(raw))
+    if u.scheme not in ("http", "https") or not u.hostname:
+        raise ValueError("Only http and https links can be opened.")
+    host = u.hostname.strip("[]")
+    if host in ("localhost",) or host.endswith(".local") or host.endswith(".internal"):
+        raise ValueError("That address is not available in the browser.")
+    try:
+        ipaddress.ip_address(host)
+        if not _public_ip(host):
+            raise ValueError("That address is not available in the browser.")
+    except ValueError as e:
+        if "not available" in str(e) or "Only http" in str(e):
+            raise
+        try:
+            infos = socket.getaddrinfo(host, None)
+        except Exception:
+            raise ValueError("Could not look up that site.")
+        ips = {i[4][0] for i in infos}
+        if not ips or not all(_public_ip(ip) for ip in ips):
+            raise ValueError("That address is not available in the browser.")
+    return u.geturl()
+
+def fetch_page(raw, token):
+    url = public_web_url(raw)
+    req = Request(url, headers={"User-Agent": "Mozilla/5.0 (LanPCBrowser) AppleWebKit/537.36 Chrome/122.0.0.0 Safari/537.36"})
+    with urlopen(req, timeout=20) as resp:
+        final = resp.geturl()
+        public_web_url(final)
+        data = resp.read(2_500_000)
+        ctype = resp.headers.get("Content-Type") or "application/octet-stream"
+    if "html" not in ctype.lower():
+        return data, ctype.split(";")[0]
+    text = data.decode("utf-8", "replace")
+    base = final
+
+    def wrap(link):
+        if not link or link.startswith(("#", "javascript:", "mailto:", "data:")):
+            return link
+        absu = urljoin(base, link)
+        if absu.startswith("http://") or absu.startswith("https://"):
+            return "/api/browse?token=%s&url=%s" % (quote(token), quote(absu, safe=""))
+        return link
+
+    def repl(m):
+        return m.group(1) + wrap(m.group(2)) + m.group(3)
+    text = re.sub(r"(?i)(\s(?:href|src|action)=)([\"'])([^\"']+)([\"'])", lambda m: m.group(1) + m.group(2) + wrap(m.group(3)) + m.group(4), text)
+    extra = "<base href='%s'>" % base.replace("&", "&amp;").replace("'", "&#39;")
+    if re.search(r"(?i)<head", text):
+        text = re.sub(r"(?i)<head([^>]*)>", lambda m: "<head" + m.group(1) + ">" + extra, text, count=1)
+    else:
+        text = extra + text
+    return text.encode("utf-8"), "text/html; charset=utf-8"
+
 # ---------------- chat ----------------
 history, streams, lock = [], set(), threading.Lock()
 
@@ -200,7 +266,9 @@ class Handler(BaseHTTPRequestHandler):
     def handle_any(self):
         try:
             u = urlparse(self.path)
-            if u.path.startswith("/api/"):
+            if u.path.startswith("/userapps/"):
+                self.userapp_static(u.path)
+            elif u.path.startswith("/api/"):
                 self.api(u.path, parse_qs(u.query))
             else:
                 self.static(u.path)
@@ -217,6 +285,15 @@ class Handler(BaseHTTPRequestHandler):
                 pass
 
     do_GET = do_PUT = do_POST = do_DELETE = handle_any
+
+    def userapp_static(self, p):
+        parts = [x for x in p.split("/") if x]
+        if len(parts) < 3 or parts[0] != "userapps":
+            return self.reply(404, "Not found", "text/plain")
+        f = userapps._inside(parts[1], "/".join(parts[2:]))
+        if not f:
+            return self.reply(404, "Not found", "text/plain")
+        self.send_file(f)
 
     def static(self, p):
         f = inside(PUB, "index.html" if p == "/" else p)
@@ -343,6 +420,29 @@ class Handler(BaseHTTPRequestHandler):
                 history.append(msg); del history[:-100]
             broadcast(msg)
             return self.reply(200, {"ok": True})
+
+        if p == "/api/userapps" and m == "GET":
+            return self.reply(200, userapps.load())
+        if p == "/api/userapps" and m == "POST":
+            name = (qs.get("name") or ["My app"])[0]
+            icon = (qs.get("icon") or ["📦"])[0]
+            desc = (qs.get("desc") or ["Custom app"])[0]
+            try:
+                return self.reply(200, userapps.add(self.body(), name, icon, desc))
+            except ValueError as e:
+                return self.reply(400, str(e))
+        if p == "/api/userapps" and m == "DELETE":
+            userapps.remove((qs.get("id") or [""])[0])
+            return self.reply(200, {"ok": True})
+
+        if p == "/api/browse" and m == "GET":
+            target = (qs.get("url") or [""])[0]
+            try:
+                data, ctype = fetch_page(target, tok)
+            except Exception as e:
+                page = "<p style=\"font-family:sans-serif\">Could not open that page: %s</p>" % str(e).replace("<", "&lt;")
+                return self.reply(200, page, "text/html")
+            return self.reply(200, data, ctype)
 
         f = inside(ROOT, path)
         if not f:

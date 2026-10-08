@@ -43,7 +43,7 @@ input,textarea,button,select{font:inherit}
 #start button:hover{background:#ffffff1c}#start hr{border:0;border-top:1px solid #ffffff1c;margin:4px 0}
 /* shared controls */
 .tool{display:flex;gap:6px;padding:6px;border-bottom:1px solid var(--line);background:var(--tool);align-items:center}
-.btn{border:1px solid var(--line);background:var(--field);color:var(--text);border-radius:5px;padding:4px 12px;cursor:pointer}
+.btn, a.btn{border:1px solid var(--line);background:var(--field);color:var(--text);border-radius:5px;padding:4px 12px;cursor:pointer;text-decoration:none;display:inline-block}
 .btn:hover{border-color:var(--acc)}.btn.pri{background:var(--acc);color:#fff;border-color:var(--acc)}.btn.red{background:#b3392f;color:#fff;border-color:#b3392f}
 .in{border:1px solid var(--line);border-radius:5px;padding:5px 8px;background:var(--field);color:var(--text);min-width:0}
 .list{flex:1;overflow:auto}
@@ -141,6 +141,64 @@ ul.steps li.cur::before{content:'◐';color:var(--acc2)}ul.steps li.done::before
 .clockdate{text-align:center;color:var(--mut);padding-bottom:18px}
 .colorpreview{height:130px;border-radius:8px;border:1px solid var(--line);display:grid;place-items:center;font-weight:700}
 
+
+.mediasplit{flex:1;min-height:0;display:flex}
+.medialist{width:220px;flex:none;overflow:auto;border-right:1px solid var(--line);background:var(--tool)}
+.mediarow{display:flex;gap:8px;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;color:var(--text);padding:8px 10px;cursor:pointer}
+.mediarow.on,.mediarow:hover{background:var(--hover)}
+.mediarow .n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mediastage{flex:1;min-width:0;display:grid;place-items:center;background:#111;overflow:auto}
+.mediastage img,.mediastage video{max-width:100%;max-height:100%}
+.mediastage audio{width:min(420px,90%)}
+.mediaempty,.nowplay{color:#ddd;padding:20px;text-align:center;display:grid;gap:10px;justify-items:center}
+.disc{width:92px;height:92px;border-radius:50%;background:conic-gradient(#2c6e73,#f0a73a,#2c6e73);display:grid;place-items:center;font-size:28px}
+.aisplit{flex:1;min-height:0;display:flex}
+.aiside{width:180px;flex:none;overflow:auto;background:var(--tool);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:4px;padding:6px}
+.airow{display:flex;gap:6px;align-items:center;text-align:left;border:0;background:none;color:var(--text);padding:6px 8px;border-radius:5px;cursor:pointer}
+.airow.on,.airow:hover{background:var(--hover)}
+.airow span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.airow i{font-style:normal;color:#d05a50}
+.aicol{flex:1;min-width:0;display:flex;flex-direction:column}
+.vscode{flex:1;min-height:0;display:flex;background:#1e1e1e;color:#d4d4d4}
+.vact{width:42px;flex:none;background:#333;display:flex;flex-direction:column;gap:4px;padding:6px 4px}
+.vact button{border:0;background:none;color:#fff;font-size:18px;height:34px;border-radius:5px;cursor:pointer}
+.vact button:hover{background:#ffffff22}
+.codeside{width:230px;flex:none;background:#252526;border-right:1px solid #111;display:flex;flex-direction:column;min-height:0}
+.filepane,.aipane{flex:1;min-height:0;display:flex;flex-direction:column}
+.codetree{flex:1;overflow:auto}
+.coderow{display:block;width:100%;text-align:left;border:0;background:none;color:#ccc;padding:4px 8px;cursor:pointer}
+.coderow:hover{background:#2a2d2e}
+.vedit{flex:1;min-width:0;display:flex;flex-direction:column}
+.codetabs{display:flex;gap:2px;overflow:auto;flex:1}
+.codetab{border:0;background:#2d2d2d;color:#ccc;padding:4px 8px;border-radius:4px;cursor:pointer;white-space:nowrap}
+.codetab.on{background:#1e1e1e;color:#fff}
+.codetab i{font-style:normal;margin-left:6px;color:#888}
+.codewrap{flex:1;min-height:0;display:flex;background:#1e1e1e}
+.gutter{width:42px;flex:none;overflow:hidden;text-align:right;padding:8px 6px;color:#858585;font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;background:#1e1e1e}
+.codepad{flex:1;border:0;resize:none;outline:none;background:#1e1e1e;color:#d4d4d4;padding:8px;font:13px/1.45 ui-monospace,Menlo,Consolas,monospace}
+.codestatus{display:flex;gap:14px;justify-content:flex-end;background:#007acc;color:#fff;font-size:12px;padding:2px 10px}
+.previewpane{position:absolute;inset:34px 0 0 0;background:var(--paper);display:flex;flex-direction:column;z-index:3}
+.preview{flex:1;border:0;background:#fff}
+.cardface{margin:16px;min-height:120px;border:1px solid var(--line);border-radius:10px;display:grid;place-items:center;padding:16px;text-align:center;background:var(--field);font-size:18px}
+.g2048{display:grid;grid-template-columns:repeat(4,64px);gap:6px;justify-content:center;padding:10px}
+.t2048{height:64px;border-radius:6px;display:grid;place-items:center;background:#c7b8a3;font-weight:700}
+.t2{background:#eee4da}.t4{background:#ede0c8}.t8{background:#f2b179}.t16{background:#f59563}.t32{background:#f67c5f}.t64{background:#f65e3b;color:#fff}.t128,.t256,.t512,.t1024,.t2048{background:#edcf72}
+.minegrid{display:grid;grid-template-columns:repeat(9,32px);gap:3px;justify-content:center;padding:10px}
+.minecell{height:32px;border:1px solid var(--line);background:var(--soft);cursor:pointer}
+.minecell.open{background:var(--field)}
+.minecell.mine{background:#e7a}
+.keygrid{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;padding:8px}
+.simongrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px}
+.simon{height:90px;border:0;border-radius:10px;cursor:pointer}
+.reactbox{margin:16px;height:160px;border:0;border-radius:10px;background:#2c6e73;color:#fff;font-size:22px;cursor:pointer}
+.molegrid{display:grid;grid-template-columns:repeat(3,80px);gap:8px;justify-content:center;padding:10px}
+.mole{height:70px;border-radius:40px;border:1px solid var(--line);background:var(--soft);font-size:26px;cursor:pointer}
+.c4{display:flex;gap:4px;justify-content:center;padding:10px}
+.c4col{display:flex;flex-direction:column-reverse;gap:4px;border:0;background:#24505a;padding:4px;border-radius:6px;cursor:pointer}
+.c4col i{width:28px;height:28px;border-radius:50%;background:#d7e3e6;display:block}
+.c4col i.red{background:#e85d5d}.c4col i.yel{background:#f0a73a}
+
+.browserframe{flex:1;width:100%;border:0;background:#fff;min-height:0}
 </style>
 </head>
 <body>
@@ -249,8 +307,8 @@ Apps.files = { name: 'Files', icon: '📁', w: 480, h: 420, open(body, w, opts) 
   const open = i => {
     const p = join(cwd, i.name);
     if (i.dir) { cwd = p; load(); }
-    else if (TEXT.test(i.name)) openApp(Apps.notepad, { path: p });
-    else if (/\.(png|jpe?g|gif|svg)$/i.test(i.name)) openApp(Apps.viewer, { path: p });
+    else if (TEXT.test(i.name) || /\.(js|py|css|json|md|html?|ts|rs|go|java|c|cpp)$/i.test(i.name)) openApp(Apps.code, { path: p });
+    else if (MEDIA_RE.test(i.name)) openApp(Apps.media, { path: p });
     else window.open(fileUrl(p, true));
   };
   upload.onchange = async () => {
@@ -260,6 +318,7 @@ Apps.files = { name: 'Files', icon: '📁', w: 480, h: 420, open(body, w, opts) 
   body.append(el('div', { class: 'tool' },
     el('button', { class: 'btn', onclick: () => { cwd = cwd.split('/').slice(0, -1).join('/'); load(); } }, '↑ Up'), crumb,
     el('button', { class: 'btn', onclick: async () => { const n = prompt('Folder name:'); if (n) { await api('/api/mkdir?path=' + encodeURIComponent(join(cwd, n)), { method: 'POST' }); load(); } } }, 'New folder'),
+    el('button', { class: 'btn', onclick: async () => { const n = prompt('New file name:', 'notes.txt'); if (!n) return; await api('/api/file?path=' + encodeURIComponent(join(cwd, n)), { method: 'PUT', body: '' }); load(); } }, 'New file'),
     el('button', { class: 'btn pri', onclick: () => upload.click() }, 'Upload')), list, upload);
   const t = setInterval(load, 5000); w.cleanup = () => clearInterval(t); load();
 } };
@@ -314,13 +373,14 @@ Apps.term = { name: 'Terminal', icon: '⌨️', w: 540, h: 340, open(body) {
   const setPrompt = () => line.firstChild.textContent = prompt$();
   const resolve = p => { const parts = (p && p.startsWith('/') ? [] : cwd.split('/').filter(Boolean)); (p || '').split('/').forEach(s => { if (s === '..') parts.pop(); else if (s && s !== '.') parts.push(s); }); return parts.join('/'); };
   const cmds = {
-    help: () => print('help ls cd pwd cat echo mkdir rm date whoami info clear\n(Virtual terminal: it only touches the shared folder, never the host shell.)'),
+    help: () => print('help ls cd pwd cat echo mkdir touch rm date whoami info clear\n(Virtual terminal: it only touches the shared folder, never the host shell.)'),
     pwd: () => print('/' + cwd), date: () => print(new Date().toString()), whoami: () => print(me),
     echo: a => print(a.join(' ')), clear: () => out.replaceChildren(),
     ls: async a => { const items = await (await api('/api/files?path=' + encodeURIComponent(resolve(a[0])))).json(); print(items.map(i => i.dir ? i.name + '/' : i.name).join('  ') || '(empty)'); },
     cd: async a => { const p = resolve(a[0]); await api('/api/files?path=' + encodeURIComponent(p)); cwd = p; },
     cat: async a => print(await (await api('/api/file?path=' + encodeURIComponent(resolve(a[0])))).text()),
     mkdir: async a => { await api('/api/mkdir?path=' + encodeURIComponent(resolve(a[0])), { method: 'POST' }); },
+    touch: async a => { await api('/api/file?path=' + encodeURIComponent(resolve(a[0])), { method: 'PUT', body: '' }); print('created /' + resolve(a[0])); },
     rm: async a => { await api('/api/file?path=' + encodeURIComponent(resolve(a[0])), { method: 'DELETE' }); },
     info: async () => { const i = await (await api('/api/info')).json(); print(`${i.host} (${i.platform})\ncpu ${i.cpu}% · ${i.cores} cores · ${i.online} chat client(s) online\n${i.ips.map(x => 'http://' + x + ':' + i.port).join('\n')}`); }
   };
@@ -421,6 +481,259 @@ Apps.settings = { name: 'Settings', icon: '⚙️', w: 580, h: 440, open(body, w
   pick(opts.tab || 'Appearance');
 } };
 
+
+/* ---------- Media, files, AI hub, code workspace, extra store ---------- */
+const IMG_RE = /\.(png|jpe?g|gif|webp|svg|bmp|ico)$/i;
+const VID_RE = /\.(mp4|webm|ogv|mov|m4v)$/i;
+const AUD_RE = /\.(mp3|wav|ogg|m4a|flac|aac)$/i;
+const MEDIA_RE = /\.(png|jpe?g|gif|webp|svg|bmp|ico|mp4|webm|ogv|mov|m4v|mp3|wav|ogg|m4a|flac|aac)$/i;
+
+async function walkFiles(path, acc) {
+  acc = acc || [];
+  const items = await (await api('/api/files?path=' + encodeURIComponent(path || ''))).json();
+  for (const i of items) {
+    const p = join(path || '', i.name);
+    if (i.dir) await walkFiles(p, acc);
+    else acc.push({ name: i.name, path: p, size: i.size, mtime: i.mtime });
+  }
+  return acc;
+}
+function mediaKind(name) {
+  if (IMG_RE.test(name)) return 'image';
+  if (VID_RE.test(name)) return 'video';
+  if (AUD_RE.test(name)) return 'audio';
+  return '';
+}
+
+Apps.media = { name: 'Media', icon: '🎬', w: 820, h: 540, open(body, w, opts) {
+  let items = [], filter = 'all', idx = -1;
+  const list = el('div', { class: 'medialist' });
+  const stage = el('div', { class: 'mediastage' });
+  const title = el('span', { class: 'm', style: 'flex:1;overflow:hidden;text-overflow:ellipsis' }, 'Library');
+  const search = el('input', { class: 'in', placeholder: 'Search library…', style: 'width:140px' });
+  const upload = el('input', { type: 'file', accept: 'image/*,video/*,audio/*', multiple: '', style: 'display:none' });
+  const tabs = ['all', 'image', 'video', 'audio'].map(k => el('button', { class: 'btn' + (k === 'all' ? ' pri' : ''), onclick: () => { filter = k; tabs.forEach(b => b.classList.toggle('pri', b.dataset.k === k)); drawList(); } }, k[0].toUpperCase() + k.slice(1)));
+  tabs.forEach((b, i) => b.dataset.k = ['all', 'image', 'video', 'audio'][i]);
+  const show = i => {
+    idx = i; const it = items[i]; if (!it) { stage.replaceChildren(el('div', { class: 'mediaempty' }, 'No media yet. Upload a photo, video or song, or drop files into the shared drive.')); title.textContent = 'Library'; return; }
+    w.setTitle(it.name); title.textContent = it.path;
+    const kind = mediaKind(it.name), src = fileUrl(it.path);
+    if (kind === 'image') stage.replaceChildren(el('img', { src, alt: it.name }));
+    else if (kind === 'video') stage.replaceChildren(el('video', { src, controls: '', autoplay: '' }));
+    else stage.replaceChildren(el('div', { class: 'nowplay' }, el('div', { class: 'disc' }, '♫'), el('b', {}, it.name), el('audio', { src, controls: '', autoplay: '' })));
+    drawList();
+  };
+  const drawList = () => {
+    const q = search.value.trim().toLowerCase();
+    const view = items.map((it, i) => ({ it, i })).filter(x => (filter === 'all' || mediaKind(x.it.name) === filter) && (!q || x.it.name.toLowerCase().includes(q)));
+    list.replaceChildren(...(view.length ? view.map(x => el('button', { class: 'mediarow' + (x.i === idx ? ' on' : ''), onclick: () => show(x.i) },
+      el('span', {}, mediaKind(x.it.name) === 'image' ? '🖼️' : mediaKind(x.it.name) === 'video' ? '🎥' : '🎵'),
+      el('span', { class: 'n' }, x.it.name))) : [el('div', { class: 'm', style: 'padding:10px' }, 'Nothing in this filter.')]));
+  };
+  const load = async () => {
+    try {
+      const all = await walkFiles('');
+      items = all.filter(f => MEDIA_RE.test(f.name)).sort((a, b) => b.mtime - a.mtime);
+      if (opts && opts.path) { const i = items.findIndex(f => f.path === opts.path); opts = null; if (i >= 0) { show(i); return; } }
+      if (idx >= items.length) idx = items.length - 1;
+      if (idx >= 0) show(idx); else { drawList(); stage.replaceChildren(el('div', { class: 'mediaempty' }, items.length ? 'Pick something from the library.' : 'Upload images, videos or music. They are stored in the shared drive.')); }
+    } catch (e) { stage.textContent = e.message; }
+  };
+  upload.onchange = async () => {
+    for (const f of upload.files) await api('/api/file?path=' + encodeURIComponent('Media/' + f.name), { method: 'PUT', body: f });
+    upload.value = ''; await load();
+  };
+  const step = d => { if (!items.length) return; show((idx + d + items.length) % items.length); };
+  body.append(el('div', { class: 'tool' }, ...tabs, search, title,
+    el('button', { class: 'btn', onclick: () => step(-1) }, 'Prev'),
+    el('button', { class: 'btn', onclick: () => step(1) }, 'Next'),
+    el('button', { class: 'btn pri', onclick: () => upload.click() }, 'Upload')),
+    el('div', { class: 'mediasplit' }, list, stage), upload);
+  search.oninput = drawList;
+  load();
+} };
+
+function orKey() { return localStorage.getItem('lanpc.openrouter.key') || ''; }
+function orModel() { return localStorage.getItem('lanpc.openrouter.model') || 'openrouter/auto'; }
+const OR_MODELS = ['openrouter/auto', 'openai/gpt-4o-mini', 'openai/gpt-4.1-mini', 'anthropic/claude-3.5-sonnet', 'google/gemini-2.0-flash-001', 'meta-llama/llama-3.3-70b-instruct', 'deepseek/deepseek-chat', 'qwen/qwen-2.5-coder-32b-instruct'];
+async function orComplete(messages, onDelta, model) {
+  const key = orKey();
+  if (!key) throw new Error('Add an OpenRouter API key first.');
+  const r = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json', 'HTTP-Referer': location.origin, 'X-Title': 'LanPC' },
+    body: JSON.stringify({ model: model || orModel(), messages, stream: true })
+  });
+  if (!r.ok) throw new Error((await r.text()).slice(0, 400) || ('OpenRouter ' + r.status));
+  const reader = r.body.getReader(); const dec = new TextDecoder(); let buf = '', full = '';
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += dec.decode(value, { stream: true });
+    const lines = buf.split('\n'); buf = lines.pop();
+    for (const line of lines) {
+      const s = line.trim(); if (!s.startsWith('data:')) continue;
+      const data = s.slice(5).trim(); if (data === '[DONE]') return full;
+      try { const d = JSON.parse(data).choices?.[0]?.delta?.content || ''; if (d) { full += d; onDelta && onDelta(d, full); } } catch (e) {}
+    }
+  }
+  return full;
+}
+function askOrKey() {
+  const k = prompt('OpenRouter API key (stored only in this browser):', orKey());
+  if (k === null) return orKey();
+  localStorage.setItem('lanpc.openrouter.key', k.trim());
+  return k.trim();
+}
+
+Apps.ai = { name: 'AI Hub', icon: '✨', w: 760, h: 540, open(body, w) {
+  let threads = JSON.parse(localStorage.getItem('lanpc.ai.threads') || 'null') || [{ id: Date.now(), title: 'New chat', messages: [] }];
+  let cur = threads[0].id;
+  const side = el('div', { class: 'aiside' });
+  const msgs = el('div', { class: 'msgs' });
+  const inp = el('textarea', { class: 'in', rows: '2', placeholder: 'Message the model…', style: 'flex:1;resize:none' });
+  const model = el('select', { class: 'in' }, ...OR_MODELS.map(m => el('option', { value: m }, m)));
+  model.value = OR_MODELS.includes(orModel()) ? orModel() : OR_MODELS[0];
+  const custom = el('input', { class: 'in', placeholder: 'or model id', value: OR_MODELS.includes(orModel()) ? '' : orModel(), style: 'width:160px' });
+  const status = el('span', { class: 'm' }, orKey() ? 'Key saved' : 'No API key');
+  const saveThreads = () => localStorage.setItem('lanpc.ai.threads', JSON.stringify(threads));
+  const thread = () => threads.find(t => t.id === cur);
+  const drawSide = () => side.replaceChildren(
+    el('button', { class: 'btn pri', onclick: () => { threads.unshift({ id: Date.now(), title: 'New chat', messages: [] }); cur = threads[0].id; saveThreads(); drawSide(); drawMsgs(); } }, 'New chat'),
+    ...threads.map(t => el('button', { class: 'airow' + (t.id === cur ? ' on' : ''), onclick: () => { cur = t.id; drawSide(); drawMsgs(); } }, el('span', {}, t.title || 'Chat'),
+      el('i', { onclick: e => { e.stopPropagation(); threads = threads.filter(x => x.id !== t.id); if (!threads.length) threads = [{ id: Date.now(), title: 'New chat', messages: [] }]; if (!thread()) cur = threads[0].id; saveThreads(); drawSide(); drawMsgs(); } }, '×'))));
+  const drawMsgs = () => {
+    const t = thread();
+    msgs.replaceChildren(...(t.messages.length ? t.messages.map(m => el('div', { class: 'msg' + (m.role === 'user' ? ' me' : '') }, el('small', {}, m.role === 'user' ? 'You' : 'AI'), m.content)) : [el('div', { class: 'mediaempty' }, 'Give LanPC an OpenRouter key, pick a model, and start a chat. The key never leaves this browser except to call OpenRouter.')]));
+    msgs.scrollTop = msgs.scrollHeight;
+  };
+  const send = async () => {
+    const text = inp.value.trim(); if (!text) return;
+    if (!orKey()) { askOrKey(); status.textContent = orKey() ? 'Key saved' : 'No API key'; if (!orKey()) return; }
+    const t = thread(); const use = custom.value.trim() || model.value; localStorage.setItem('lanpc.openrouter.model', use);
+    t.messages.push({ role: 'user', content: text }); if (t.title === 'New chat') t.title = text.slice(0, 32);
+    t.messages.push({ role: 'assistant', content: '' }); inp.value = ''; drawSide(); drawMsgs(); status.textContent = 'Thinking…';
+    const bubble = msgs.lastChild;
+    try {
+      await orComplete(t.messages.slice(0, -1).map(m => ({ role: m.role, content: m.content })), (d, full) => { t.messages[t.messages.length - 1].content = full; bubble.lastChild.textContent = full; msgs.scrollTop = msgs.scrollHeight; }, use);
+      if (!t.messages[t.messages.length - 1].content) t.messages[t.messages.length - 1].content = '(empty reply)';
+      status.textContent = 'Ready';
+    } catch (e) { t.messages[t.messages.length - 1].content = 'Error: ' + e.message; status.textContent = 'Error'; }
+    saveThreads(); drawMsgs();
+  };
+  model.onchange = () => { custom.value = ''; localStorage.setItem('lanpc.openrouter.model', model.value); };
+  inp.onkeydown = e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } };
+  body.append(el('div', { class: 'aisplit' }, side, el('div', { class: 'aicol' },
+    el('div', { class: 'tool' }, model, custom, el('button', { class: 'btn', onclick: () => { askOrKey(); status.textContent = orKey() ? 'Key saved' : 'No API key'; } }, 'API key'), status),
+    msgs, el('div', { class: 'tool' }, inp, el('button', { class: 'btn pri', onclick: send }, 'Send')))));
+  drawSide(); drawMsgs();
+} };
+
+Apps.code = { name: 'Code', icon: '💻', w: 980, h: 600, open(body, w, opts) {
+  const tabs = []; let active = -1, treePath = '';
+  const tree = el('div', { class: 'codetree' });
+  const tabbar = el('div', { class: 'codetabs' });
+  const gutter = el('div', { class: 'gutter' });
+  const ta = el('textarea', { class: 'codepad', spellcheck: 'false' });
+  const status = el('div', { class: 'codestatus' }, el('span', {}, 'Ln 1'), el('span', {}, 'UTF-8'), el('span', {}, 'Plain'));
+  const aiLog = el('div', { class: 'msgs', style: 'background:#1e1e1e;color:#ddd' });
+  const aiIn = el('textarea', { class: 'in', rows: '3', placeholder: 'Ask the AI about this file…', style: 'width:100%;resize:vertical' });
+  const side = el('div', { class: 'codeside' });
+  let sideMode = 'files';
+  const langOf = n => ({ js: 'JavaScript', mjs: 'JavaScript', py: 'Python', html: 'HTML', css: 'CSS', json: 'JSON', md: 'Markdown', txt: 'Plain', rs: 'Rust', go: 'Go', java: 'Java', c: 'C', cpp: 'C++', ts: 'TypeScript' }[(n.split('.').pop() || '').toLowerCase()] || 'Plain');
+  const saveTabs = () => {};
+  const paintGutter = () => { const n = ta.value.split('\n').length; gutter.textContent = Array.from({ length: n }, (_, i) => i + 1).join('\n'); status.firstChild.textContent = 'Ln ' + (ta.value.slice(0, ta.selectionStart).split('\n').length); };
+  const drawTabs = () => tabbar.replaceChildren(...tabs.map((t, i) => el('button', { class: 'codetab' + (i === active ? ' on' : ''), onclick: () => activate(i) },
+    (t.dirty ? '● ' : '') + (t.path.split('/').pop() || 'untitled'),
+    el('i', { onclick: e => { e.stopPropagation(); closeTab(i); } }, '×'))));
+  const activate = i => {
+    if (active >= 0 && tabs[active]) tabs[active].text = ta.value;
+    active = i; const t = tabs[i]; ta.value = t ? t.text : ''; w.setTitle(t ? t.path.split('/').pop() : 'Code');
+    status.children[2].textContent = t ? langOf(t.path) : 'Plain'; drawTabs(); paintGutter();
+  };
+  const closeTab = i => { tabs.splice(i, 1); if (active >= tabs.length) active = tabs.length - 1; if (active < 0) { ta.value = ''; drawTabs(); paintGutter(); return; } const keep = active; active = -1; activate(keep); };
+  const openPath = async p => {
+    const hit = tabs.findIndex(t => t.path === p);
+    if (hit >= 0) return activate(hit);
+    let text = '';
+    try { const r = await api('/api/file?path=' + encodeURIComponent(p)); text = await r.text(); } catch (e) { text = ''; }
+    tabs.push({ path: p, text, dirty: false }); activate(tabs.length - 1);
+  };
+  const save = async () => {
+    const t = tabs[active]; if (!t) return;
+    t.text = ta.value; t.dirty = false;
+    await api('/api/file?path=' + encodeURIComponent(t.path), { method: 'PUT', body: t.text });
+    status.children[1].textContent = 'Saved'; drawTabs(); setTimeout(() => status.children[1].textContent = 'UTF-8', 1200);
+  };
+  const drawTree = async () => {
+    try {
+      const items = await (await api('/api/files?path=' + encodeURIComponent(treePath))).json();
+      tree.replaceChildren(
+        el('div', { class: 'm', style: 'padding:6px 8px' }, '/' + treePath),
+        treePath ? el('button', { class: 'coderow', onclick: () => { treePath = treePath.split('/').slice(0, -1).join('/'); drawTree(); } }, '↑ ..') : null,
+        ...items.map(i => el('button', { class: 'coderow', onclick: () => { const p = join(treePath, i.name); if (i.dir) { treePath = p; drawTree(); } else openPath(p); } },
+          (i.dir ? '📁 ' : '📄 ') + i.name))
+      );
+    } catch (e) { tree.textContent = e.message; }
+  };
+  const newFile = async () => {
+    const n = prompt('File name (example: src/app.js):'); if (!n) return;
+    const p = join(treePath, n);
+    await api('/api/file?path=' + encodeURIComponent(p), { method: 'PUT', body: '' });
+    await drawTree(); openPath(p);
+  };
+  const aiSend = async (preset) => {
+    if (!orKey()) { askOrKey(); if (!orKey()) return; }
+    const t = tabs[active]; const file = t ? t.path : '(no file)'; const code = ta.value;
+    const q = preset || aiIn.value.trim(); if (!q) return;
+    aiIn.value = '';
+    aiLog.append(el('div', { class: 'msg me' }, el('small', {}, 'You'), q));
+    const bubble = el('div', { class: 'msg' }, el('small', {}, 'AI'), '');
+    aiLog.append(bubble); aiLog.scrollTop = aiLog.scrollHeight;
+    const sys = { role: 'system', content: 'You are a coding assistant inside a LAN desktop IDE. Reply with concise help. When you write code for the open file, put the full replacement file in one fenced code block.' };
+    const user = { role: 'user', content: 'File: ' + file + '\n\n```\n' + code.slice(0, 12000) + '\n```\n\n' + q };
+    try {
+      await orComplete([sys, user], (d, full) => { bubble.lastChild.textContent = full; aiLog.scrollTop = aiLog.scrollHeight; });
+    } catch (e) { bubble.lastChild.textContent = 'Error: ' + e.message; }
+  };
+  const insertLast = () => {
+    const last = [...aiLog.querySelectorAll('.msg')].pop(); if (!last) return;
+    const m = last.textContent.match(/```[a-zA-Z0-9]*\n([\s\S]*?)```/);
+    const chunk = m ? m[1] : last.childNodes[1]?.textContent || '';
+    if (!tabs[active]) return alert('Open a file first.');
+    ta.value = chunk.replace(/\n$/, ''); tabs[active].dirty = true; paintGutter(); drawTabs();
+  };
+  const preview = () => {
+    const t = tabs[active]; if (!t) return;
+    const html = /\.html?$/i.test(t.path) ? ta.value : '<pre style="white-space:pre-wrap;font:13px monospace">' + ta.value.replace(/[&<>]/g, c => ({ '&': '&', '<': '<', '>': '>' }[c])) + '</pre>';
+    const fr = el('iframe', { class: 'preview', sandbox: 'allow-scripts' });
+    const pane = el('div', { class: 'previewpane' }, el('div', { class: 'tool' }, el('b', {}, 'Preview'), el('button', { class: 'btn', onclick: () => pane.remove() }, 'Close')), fr);
+    body.append(pane); fr.srcdoc = html;
+  };
+  ta.oninput = () => { if (tabs[active]) { tabs[active].text = ta.value; tabs[active].dirty = true; drawTabs(); } paintGutter(); };
+  ta.onkeyup = paintGutter; ta.onclick = paintGutter;
+  ta.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); save(); } if (e.key === 'Tab') { e.preventDefault(); const a = ta.selectionStart; ta.value = ta.value.slice(0, a) + '  ' + ta.value.slice(ta.selectionEnd); ta.selectionStart = ta.selectionEnd = a + 2; if (tabs[active]) tabs[active].dirty = true; } });
+  ta.addEventListener('scroll', () => { gutter.scrollTop = ta.scrollTop; });
+  const showSide = mode => {
+    sideMode = mode;
+    side.replaceChildren(mode === 'ai'
+      ? el('div', { class: 'aipane' }, el('div', { class: 'tool' }, el('b', {}, 'AI'), el('button', { class: 'btn', onclick: askOrKey }, 'Key')), aiLog,
+          el('div', { class: 'tool', style: 'flex-wrap:wrap' }, el('button', { class: 'btn', onclick: () => aiSend('Explain this file.') }, 'Explain'), el('button', { class: 'btn', onclick: () => aiSend('Find bugs and show a fixed version in one code block.') }, 'Fix'), el('button', { class: 'btn', onclick: insertLast }, 'Apply code')),
+          aiIn, el('button', { class: 'btn pri', onclick: () => aiSend() }, 'Ask'))
+      : el('div', { class: 'filepane' }, el('div', { class: 'tool' }, el('b', {}, 'Explorer'), el('button', { class: 'btn', onclick: newFile }, 'New file'), el('button', { class: 'btn', onclick: async () => { const n = prompt('Folder name:'); if (n) { await api('/api/mkdir?path=' + encodeURIComponent(join(treePath, n)), { method: 'POST' }); drawTree(); } } }, 'Folder')), tree));
+    if (mode === 'files') drawTree();
+  };
+  body.append(el('div', { class: 'vscode' },
+    el('div', { class: 'vact' },
+      el('button', { title: 'Explorer', onclick: () => showSide('files') }, '📁'),
+      el('button', { title: 'AI', onclick: () => showSide('ai') }, '✨')),
+    side,
+    el('div', { class: 'vedit' },
+      el('div', { class: 'tool' }, tabbar, el('button', { class: 'btn pri', onclick: save }, 'Save'), el('button', { class: 'btn', onclick: preview }, 'Preview')),
+      el('div', { class: 'codewrap' }, gutter, ta), status)));
+  showSide('files');
+  if (opts && opts.path) openPath(opts.path);
+} };
 
 // ---------- App Store add-on ----------
 // Everything below is an additive offline Store. Existing LanPC apps/backend are untouched.
@@ -591,11 +904,598 @@ const StoreApps = {
       go.onclick=()=>{if(active){n++;score.textContent='Clicks: '+n;return}n=0;left=10;active=true;score.textContent='Clicks: 0';go.textContent='CLICK!';clearInterval(timer);timer=setInterval(()=>{left-=.1;out.textContent=Math.max(0,left).toFixed(1);if(left<=0){clearInterval(timer);active=false;go.textContent='START AGAIN'}},100)};
       body.append(out,score,go);
     }
+  },
+  pomodoro: {
+    name:'Pomodoro', icon:'🍅', type:'App', size:'0.2 MB',
+    desc:'25 minute focus timer with short and long breaks.',
+    w:360, h:320,
+    open(body){
+      const out=el('div',{class:'clockbig'},'25:00'), label=el('div',{class:'m',style:'text-align:center'},'Focus');
+      let left=25*60, mode='Focus', timer;
+      const modes={Focus:25*60, 'Short break':5*60, 'Long break':15*60};
+      const draw=()=>out.textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');
+      const set=k=>{mode=k;left=modes[k];label.textContent=k;draw();};
+      const toggle=()=>{if(timer){clearInterval(timer);timer=null;return}timer=setInterval(()=>{left--;if(left<=0){clearInterval(timer);timer=null;left=0}draw()},1000)};
+      body.append(out,label,el('div',{class:'gamekeys'},...Object.keys(modes).map(k=>el('button',{class:'btn',onclick:()=>set(k)},k))),el('div',{class:'gamekeys'},el('button',{class:'btn pri',onclick:toggle},'Start / Pause'),el('button',{class:'btn',onclick:()=>set(mode)},'Reset')));
+    }
+  },
+  passwords: {
+    name:'Passwords', icon:'🔐', type:'App', size:'0.2 MB',
+    desc:'Generate a random password and copy it.',
+    w:400, h:300,
+    open(body){
+      const out=el('input',{class:'in',readonly:'',style:'font:16px monospace'}), len=el('input',{type:'range',min:8,max:40,value:16});
+      const gen=()=>{const abc='abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%&*?';let s='';for(let i=0;i<+len.value;i++)s+=abc[Math.floor(Math.random()*abc.length)];out.value=s};
+      body.append(el('div',{class:'pane'},el('h3',{},'Password generator'),out,el('label',{class:'f'},'Length ',len),el('div',{},el('button',{class:'btn pri',onclick:gen},'Generate'),el('button',{class:'btn',onclick:async()=>{try{await navigator.clipboard.writeText(out.value)}catch(e){}}},'Copy'))));gen();
+    }
+  },
+  weather: {
+    name:'Weather', icon:'⛅', type:'App', size:'0.3 MB',
+    desc:'Current weather from Open-Meteo. Needs internet, no key.',
+    w:420, h:380,
+    open(body){
+      const city=el('input',{class:'in',placeholder:'City name',value:localStorage.getItem('lanpc.city')||''});
+      const box=el('div',{class:'pane'});
+      const go=async()=>{
+        const q=city.value.trim(); if(!q)return; localStorage.setItem('lanpc.city',q); box.textContent='Looking up…';
+        try{
+          const g=await (await fetch('https://geocoding-api.open-meteo.com/v1/search?count=1&name='+encodeURIComponent(q))).json();
+          if(!g.results||!g.results[0]) throw new Error('City not found');
+          const p=g.results[0];
+          const w=await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.latitude}&longitude=${p.longitude}&current=temperature_2m,wind_speed_10m,weather_code`)).json();
+          const c=w.current;
+          box.replaceChildren(el('h3',{},p.name+(p.country?', '+p.country:'')), el('div',{class:'clockbig',style:'padding:8px'},Math.round(c.temperature_2m)+'°'), el('p',{class:'m'},'Wind '+c.wind_speed_10m+' km/h · code '+c.weather_code));
+        }catch(e){box.textContent=e.message}
+      };
+      city.onkeydown=e=>{if(e.key==='Enter')go()};
+      body.append(el('div',{class:'tool'},city,el('button',{class:'btn pri',onclick:go},'Look up')),box);
+      if(city.value)go();
+    }
+  },
+  flashcards: {
+    name:'Flashcards', icon:'🗂️', type:'App', size:'0.3 MB',
+    desc:'Make cards and flip through them. Saved on this device.',
+    w:420, h:420,
+    open(body){
+      let cards=JSON.parse(localStorage.getItem('lanpc.cards')||'[]'), i=0, back=false;
+      const face=el('div',{class:'cardface'},'Add a card');
+      const draw=()=>{const c=cards[i];face.textContent=c?(back?c.b:c.f):'No cards yet';};
+      const save=()=>localStorage.setItem('lanpc.cards',JSON.stringify(cards));
+      body.append(face,el('div',{class:'gamekeys'},el('button',{class:'btn',onclick:()=>{if(!cards.length)return;i=(i-1+cards.length)%cards.length;back=false;draw()}},'Prev'),el('button',{class:'btn pri',onclick:()=>{back=!back;draw()}},'Flip'),el('button',{class:'btn',onclick:()=>{if(!cards.length)return;i=(i+1)%cards.length;back=false;draw()}},'Next')),
+        el('div',{class:'tool'},el('button',{class:'btn',onclick:()=>{const f=prompt('Front');if(!f)return;const b=prompt('Back')||'';cards.push({f,b});save();i=cards.length-1;back=false;draw()}},'Add'),el('button',{class:'btn',onclick:()=>{if(!cards.length)return;cards.splice(i,1);i=0;save();draw()}},'Delete')));
+      draw();
+    }
+  },
+  jsontool: {
+    name:'JSON Tool', icon:'{}', type:'App', size:'0.2 MB',
+    desc:'Pretty-print or minify JSON.',
+    w:480, h:400,
+    open(body){
+      const ta=el('textarea',{class:'pad',placeholder:'Paste JSON'}), out=el('p',{class:'err'});
+      const run=pretty=>{try{const v=JSON.parse(ta.value);ta.value=pretty?JSON.stringify(v,null,2):JSON.stringify(v);out.textContent='OK';out.className='ok'}catch(e){out.textContent=e.message;out.className='err'}};
+      body.append(el('div',{class:'tool'},el('button',{class:'btn pri',onclick:()=>run(true)},'Pretty'),el('button',{class:'btn',onclick:()=>run(false)},'Minify'),out),ta);
+    }
+  },
+  budget: {
+    name:'Budget', icon:'💰', type:'App', size:'0.3 MB',
+    desc:'Track money in and out on this device.',
+    w:440, h:420,
+    open(body){
+      let rows=JSON.parse(localStorage.getItem('lanpc.budget')||'[]');
+      const list=el('div',{class:'list'}), sum=el('b',{});
+      const name=el('input',{class:'in',placeholder:'Note',style:'flex:1'}), amt=el('input',{class:'in',type:'number',placeholder:'Amount',style:'width:90px'});
+      const draw=()=>{const t=rows.reduce((s,r)=>s+r.amt,0);sum.textContent=(t>=0?'+':'')+t.toFixed(2);list.replaceChildren(...rows.map((r,i)=>el('div',{class:'row'},el('span',{class:'n'},r.note),el('span',{},(r.amt>=0?'+':'')+r.amt.toFixed(2)),el('button',{class:'d',onclick:()=>{rows.splice(i,1);localStorage.setItem('lanpc.budget',JSON.stringify(rows));draw()}},'×'))));};
+      body.append(el('div',{class:'tool'},name,amt,el('button',{class:'btn',onclick:()=>{rows.push({note:name.value||'Item',amt:Math.abs(+amt.value||0)});name.value=amt.value='';localStorage.setItem('lanpc.budget',JSON.stringify(rows));draw()}},'In'),el('button',{class:'btn',onclick:()=>{rows.push({note:name.value||'Item',amt:-Math.abs(+amt.value||0)});name.value=amt.value='';localStorage.setItem('lanpc.budget',JSON.stringify(rows));draw()}},'Out'),sum),list);draw();
+    }
+  },
+  worldclock: {
+    name:'World Clock', icon:'🌍', type:'App', size:'0.2 MB',
+    desc:'Clocks for a few cities around the world.',
+    w:380, h:360,
+    open(body){
+      const zones=[['Local',undefined],['London','Europe/London'],['New York','America/New_York'],['Tokyo','Asia/Tokyo'],['Sydney','Australia/Sydney'],['Dubai','Asia/Dubai']];
+      const box=el('div',{class:'list'});
+      const tick=()=>box.replaceChildren(...zones.map(z=>el('div',{class:'row'},el('span',{class:'n'},z[0]),el('b',{},new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:z[1]})))));
+      tick(); const t=setInterval(tick,1000); body.append(box);
+    }
+  },
+  quotes: {
+    name:'Quotes', icon:'💬', type:'App', size:'0.2 MB',
+    desc:'A small deck of short quotes. Offline.',
+    w:400, h:300,
+    open(body){
+      const qs=['Make it work, then make it clear.','Small tools, used often, beat big tools used never.','The shared folder is the computer.','Write the name of the thing you are making.','Done is a file you can open again.'];
+      const out=el('div',{class:'cardface'}); const next=()=>out.textContent=qs[Math.floor(Math.random()*qs.length)];
+      body.append(out,el('div',{class:'gamekeys'},el('button',{class:'btn pri',onclick:next},'Another'))); next();
+    }
+  },
+  g2048: {
+    name:'2048', icon:'🔢', type:'Game', size:'0.4 MB',
+    desc:'Slide tiles. Same numbers merge. Reach 2048.',
+    w:420, h:520,
+    open(body){
+      let b=[], score=0; const grid=el('div',{class:'g2048'}), info=el('div',{class:'gameinfo'},el('span',{},'Score: 0'),el('button',{class:'btn',onclick:reset},'New'));
+      const empty=()=>{const xs=[];b.forEach((v,i)=>{if(!v)xs.push(i)});return xs};
+      const add=()=>{const xs=empty();if(!xs.length)return;b[xs[Math.floor(Math.random()*xs.length)]]=Math.random()<.9?2:4};
+      const draw=()=>{grid.replaceChildren(...b.map(v=>el('div',{class:'t2048 t'+(v||'')},v||'')));info.firstChild.textContent='Score: '+score};
+      function slide(row){const a=row.filter(Boolean);for(let i=0;i<a.length-1;i++){if(a[i]===a[i+1]){a[i]*=2;score+=a[i];a.splice(i+1,1)}}while(a.length<4)a.push(0);return a}
+      const move=dir=>{const before=b.join();const lines=[];for(let i=0;i<4;i++){let line=[];for(let j=0;j<4;j++){const x=dir==='l'||dir==='r'?j:i,y=dir==='l'||dir==='r'?i:j;line.push(b[y*4+x])}if(dir==='r'||dir==='d')line.reverse();line=slide(line);if(dir==='r'||dir==='d')line.reverse();lines.push(line)}
+        if(dir==='l'||dir==='r')lines.forEach((line,y)=>line.forEach((v,x)=>b[y*4+x]=v));else lines.forEach((line,x)=>line.forEach((v,y)=>b[y*4+x]=v));
+        if(b.join()!==before)add();draw();if(!empty().length)info.firstChild.textContent='No moves · '+score};
+      function reset(){b=Array(16).fill(0);score=0;add();add();draw()}
+      document.addEventListener('keydown',e=>{const m={ArrowLeft:'l',ArrowRight:'r',ArrowUp:'u',ArrowDown:'d'}[e.key];if(m){e.preventDefault();move(m)}});
+      body.append(info,grid,el('div',{class:'gamekeys'},...[['←','l'],['↑','u'],['↓','d'],['→','r']].map(k=>el('button',{class:'btn',onclick:()=>move(k[1])},k[0]))));reset();
+    }
+  },
+  mines: {
+    name:'Minesweeper', icon:'💣', type:'Game', size:'0.4 MB',
+    desc:'Clear the board. Numbers show nearby mines.',
+    w:420, h:500,
+    open(body){
+      const W=9,H=9,M=10; let cells=[],over=false; const grid=el('div',{class:'minegrid'}), info=el('div',{class:'gameinfo'},el('span',{},'Mines: '+M),el('button',{class:'btn',onclick:reset},'New'));
+      const nabe=(x,y)=>[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]].map(([dx,dy])=>cells.find(c=>c.x===x+dx&&c.y===y+dy)).filter(Boolean);
+      const reveal=c=>{if(over||c.open||c.flag)return;c.open=true;if(c.mine){over=true;cells.forEach(k=>{if(k.mine)k.open=true});info.firstChild.textContent='Boom';draw();return}if(!c.n)nabe(c.x,c.y).forEach(reveal);if(cells.filter(k=>!k.mine).every(k=>k.open)){over=true;info.firstChild.textContent='Cleared'}draw()};
+      const draw=()=>grid.replaceChildren(...cells.map(c=>el('button',{class:'minecell'+(c.open?' open':'')+(c.mine&&c.open?' mine':''),onclick:()=>reveal(c),oncontextmenu:e=>{e.preventDefault();if(!c.open){c.flag=!c.flag;draw()}}},c.open?(c.mine?'💣':(c.n||'')):(c.flag?'🚩':''))));
+      function reset(){cells=[];for(let y=0;y<H;y++)for(let x=0;x<W;x++)cells.push({x,y,mine:false,open:false,flag:false,n:0});cells.sort(()=>Math.random()-.5).slice(0,M).forEach(c=>c.mine=true);cells.forEach(c=>c.n=nabe(c.x,c.y).filter(k=>k.mine).length);over=false;info.firstChild.textContent='Mines: '+M;draw()}
+      body.append(info,grid,el('p',{class:'m',style:'text-align:center'},'Right-click or long-press is a flag on desktop.'));reset();
+    }
+  },
+  breakout: {
+    name:'Breakout', icon:'🧱', type:'Game', size:'0.4 MB',
+    desc:'Bounce the ball and clear the bricks. Mouse or arrows.',
+    w:480, h:420,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'440',height:'300'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Score: 0');
+      let px=180,ball,bricks,score,timer;
+      const reset=()=>{px=180;ball={x:220,y:240,vx:3,vy:-3};bricks=[];score=0;for(let r=0;r<4;r++)for(let i=0;i<8;i++)bricks.push({x:12+i*53,y:16+r*18,on:1});clearInterval(timer);timer=setInterval(step,16)};
+      c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();px=Math.max(0,Math.min(360,(e.clientX-r.left)*440/r.width-40))});
+      document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')px=Math.max(0,px-18);if(e.key==='ArrowRight')px=Math.min(360,px+18)});
+      const step=()=>{ball.x+=ball.vx;ball.y+=ball.vy;if(ball.x<8||ball.x>432)ball.vx*=-1;if(ball.y<8)ball.vy*=-1;if(ball.y>268&&ball.x>px&&ball.x<px+80){ball.vy=-Math.abs(ball.vy);ball.vx+=(ball.x-(px+40))*.08}
+        bricks.forEach(b=>{if(b.on&&ball.x>b.x&&ball.x<b.x+48&&ball.y>b.y&&ball.y<b.y+14){b.on=0;ball.vy*=-1;score+=10}});
+        if(ball.y>300){info.textContent='Miss · score '+score;clearInterval(timer)}else if(bricks.every(b=>!b.on)){info.textContent='Cleared · '+score;clearInterval(timer)}else info.textContent='Score: '+score;draw()};
+      const draw=()=>{ctx.fillStyle='#0b1418';ctx.fillRect(0,0,440,300);ctx.fillStyle='#f0a73a';bricks.forEach(b=>{if(b.on)ctx.fillRect(b.x,b.y,48,14)});ctx.fillStyle='#fff';ctx.fillRect(px,276,80,8);ctx.beginPath();ctx.arc(ball.x,ball.y,6,0,7);ctx.fill()};
+      body.append(info,c,el('button',{class:'btn',onclick:reset},'Restart'));reset();
+    }
+  },
+  hangman: {
+    name:'Hangman', icon:'🔤', type:'Game', size:'0.3 MB',
+    desc:'Guess the word before the drawing is finished.',
+    w:420, h:460,
+    open(body){
+      const words=['lantern','desktop','folder','network','pixel','keyboard','window','server','shared','pencil'];
+      let word,guess,bad; const out=el('div',{class:'clockbig',style:'letter-spacing:6px;font-size:28px'}), msg=el('p',{class:'m',style:'text-align:center'}), keys=el('div',{class:'keygrid'});
+      const draw=()=>{out.textContent=word.split('').map(ch=>guess.has(ch)?ch:'_').join(' ');msg.textContent='Wrong: '+bad+' / 6';keys.replaceChildren(...'abcdefghijklmnopqrstuvwxyz'.split('').map(ch=>el('button',{class:'btn',disabled:guess.has(ch),onclick:()=>press(ch)},ch)))};
+      const press=ch=>{if(guess.has(ch))return;guess.add(ch);if(!word.includes(ch))bad++;draw();if(word.split('').every(c=>guess.has(c)))msg.textContent='You got it';if(bad>=6){msg.textContent='It was '+word;out.textContent=word}};
+      const reset=()=>{word=words[Math.floor(Math.random()*words.length)];guess=new Set();bad=0;draw()};
+      body.append(out,msg,keys,el('button',{class:'btn',onclick:reset},'New word'));reset();
+    }
+  },
+  simon: {
+    name:'Simon', icon:'🟢', type:'Game', size:'0.3 MB',
+    desc:'Repeat the color sequence as it gets longer.',
+    w:380, h:420,
+    open(body){
+      const colors=['#e85d5d','#6bd36b','#5b7cff','#f0a73a']; let seq=[],step=0,lock=true; const pads=[], info=el('div',{class:'gameinfo'},'Watch');
+      const flash=async i=>{pads[i].style.filter='brightness(1.8)';await new Promise(r=>setTimeout(r,280));pads[i].style.filter='';await new Promise(r=>setTimeout(r,120))};
+      const play=async()=>{lock=true;info.textContent='Watch';for(const i of seq)await flash(i);lock=false;step=0;info.textContent='Your turn · '+seq.length};
+      const press=async i=>{if(lock)return;await flash(i);if(i!==seq[step]){info.textContent='Missed at '+seq.length;lock=true;return}step++;if(step===seq.length){seq.push(Math.floor(Math.random()*4));setTimeout(play,500)}};
+      const grid=el('div',{class:'simongrid'});colors.forEach((col,i)=>{const b=el('button',{class:'simon',style:'background:'+col,onclick:()=>press(i)});pads.push(b);grid.append(b)});
+      body.append(info,grid,el('button',{class:'btn pri',onclick:()=>{seq=[Math.floor(Math.random()*4)];play()}},'Start'));
+    }
+  },
+  reaction: {
+    name:'Reaction', icon:'⚡', type:'Game', size:'0.2 MB',
+    desc:'Wait for green, then click. Measures your reaction time.',
+    w:360, h:320,
+    open(body){
+      const box=el('button',{class:'reactbox'},'Click to start'); let t0=0, wait, state='idle';
+      box.onclick=()=>{
+        if(state==='idle'||state==='done'){state='wait';box.textContent='Wait for green…';box.style.background='#b3392f';wait=setTimeout(()=>{state='go';t0=performance.now();box.textContent='CLICK';box.style.background='#3f9d63'},700+Math.random()*2000)}
+        else if(state==='wait'){clearTimeout(wait);state='done';box.textContent='Too soon. Click to retry';box.style.background='#888'}
+        else if(state==='go'){state='done';box.textContent=Math.round(performance.now()-t0)+' ms · click to retry';box.style.background='#2c6e73'}
+      };
+      body.append(box);
+    }
+  },
+  mole: {
+    name:'Whack-a-Mole', icon:'🔨', type:'Game', size:'0.3 MB',
+    desc:'Hit the mole. You have 20 seconds.',
+    w:380, h:420,
+    open(body){
+      let score=0, on=-1, left=20, timer; const holes=Array.from({length:9},()=>el('button',{class:'mole'}));
+      const info=el('div',{class:'gameinfo'},'Score: 0');
+      const draw=()=>holes.forEach((h,i)=>{h.textContent=i===on?'🐹':'';});
+      const start=()=>{score=0;left=20;clearInterval(timer);timer=setInterval(()=>{left-=.5;on=Math.random()<.3?-1:Math.floor(Math.random()*9);info.textContent='Score: '+score+' · '+Math.ceil(left)+'s';draw();if(left<=0){clearInterval(timer);on=-1;draw();info.textContent='Done · '+score}},500)};
+      holes.forEach((h,i)=>h.onclick=()=>{if(i===on){score++;on=-1;draw()}});
+      body.append(info,el('div',{class:'molegrid'},...holes),el('button',{class:'btn pri',onclick:start},'Start'));
+    }
+  },
+  connect4: {
+    name:'Connect 4', icon:'🔴', type:'Game', size:'0.4 MB',
+    desc:'Drop discs. Get four in a row before the computer.',
+    w:440, h:480,
+    open(body){
+      let b,turn,over; const grid=el('div',{class:'c4'}), info=el('div',{class:'gameinfo'},'Your turn');
+      function win(p){const dirs=[[1,0],[0,1],[1,1],[1,-1]];for(let y=0;y<6;y++){for(let x=0;x<7;x++){if(b[y][x]!==p)continue;for(let di=0;di<dirs.length;di++){const dx=dirs[di][0],dy=dirs[di][1];let n=1;for(let k=1;k<4;k++){const yy=y+dy*k,xx=x+dx*k;if(yy<0||yy>5||xx<0||xx>6||b[yy][xx]!==p)break;n++;}if(n>=4)return true;}}}return false;}
+      const drop=col=>{for(let y=5;y>=0;y--)if(!b[y][col])return y;return -1};
+      const draw=()=>grid.replaceChildren(...Array.from({length:7},(_,x)=>el('button',{class:'c4col',onclick:()=>play(x)},...b.map(row=>el('i',{class:row[x]==='X'?'red':row[x]==='O'?'yel':''})))));
+      const play=x=>{if(over)return;const y=drop(x);if(y<0)return;b[y][x]='X';if(win('X')){over=true;info.textContent='You win';draw();return}if(b[0].every(Boolean)&&b.every(r=>r.every(Boolean))){over=true;info.textContent='Draw';draw();return}
+        const cols=[...Array(7).keys()].filter(c=>drop(c)>=0);const c=cols[Math.floor(Math.random()*cols.length)];b[drop(c)][c]='O';if(win('O')){over=true;info.textContent='Computer wins'}draw()};
+      const reset=()=>{b=Array.from({length:6},()=>Array(7).fill(''));over=false;info.textContent='Your turn';draw()};
+      body.append(info,grid,el('button',{class:'btn',onclick:reset},'New game'));reset();
+    }
+  },
+  flappy: {
+    name:'Flappy', icon:'🐦', type:'Game', size:'0.4 MB',
+    desc:'Tap or press space to fly through the gaps.',
+    w:420, h:460,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'320',height:'420'}),ctx=c.getContext('2d');
+      let y,v,pipes,score,alive,timer;
+      const reset=()=>{y=200;v=0;pipes=[];score=0;alive=true;clearInterval(timer);timer=setInterval(step,20)};
+      const flap=()=>{if(!alive){reset();return}v=-6};
+      c.addEventListener('pointerdown',flap); document.addEventListener('keydown',e=>{if(e.key===' '){e.preventDefault();flap()}});
+      const step=()=>{v+=.35;y+=v;if(pipes.length===0||pipes[pipes.length-1].x<180)pipes.push({x:320,gap:70+Math.random()*120});pipes.forEach(p=>p.x-=3);
+        pipes.forEach(p=>{if(!p.scored&&p.x<60){p.scored=1;score++}});pipes=pipes.filter(p=>p.x>-40);
+        if(y<0||y>400||pipes.some(p=>p.x<80&&p.x>20&&(y<p.gap||y>p.gap+90)))alive=false;
+        ctx.fillStyle='#87c6e8';ctx.fillRect(0,0,320,420);ctx.fillStyle='#3a7d52';pipes.forEach(p=>{ctx.fillRect(p.x,0,36,p.gap);ctx.fillRect(p.x,p.gap+90,36,420)});ctx.fillStyle='#f0a73a';ctx.beginPath();ctx.arc(60,y,10,0,7);ctx.fill();ctx.fillStyle='#122';ctx.font='20px system-ui';ctx.fillText(alive?String(score):'Score '+score+' · tap',12,28);if(!alive)clearInterval(timer)};
+      body.append(c);reset();
+    }
+  },
+  tetris: {
+    name:'Tetris', icon:'🟦', type:'Game', size:'0.5 MB',
+    desc:'Stack the falling pieces. Arrow keys move and rotate.',
+    w:380, h:520,
+    open(body){
+      const SHAPES=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[1,0,0],[1,1,1]],[[0,0,1],[1,1,1]],[[1,1,0],[0,1,1]],[[0,1,1],[1,1,0]]];
+      const c=el('canvas',{class:'gamecanvas',width:'200',height:'400'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Score: 0');
+      let board,piece,score,timer;
+      const rot=m=>m[0].map((_,i)=>m.map(r=>r[i]).reverse());
+      const spawn=()=>{const s=SHAPES[Math.floor(Math.random()*SHAPES.length)];piece={s,x:3,y:0};if(hit(piece)){clearInterval(timer);info.textContent='Game over · '+score}};
+      const hit=(p,dx=0,dy=0,s=p.s)=>s.some((row,y)=>row.some((v,x)=>v&&(p.x+x+dx<0||p.x+x+dx>9||p.y+y+dy>19||(board[p.y+y+dy]&&board[p.y+y+dy][p.x+x+dx]))));
+      const lock=()=>{piece.s.forEach((row,y)=>row.forEach((v,x)=>{if(v)board[piece.y+y][piece.x+x]=1}));let cleared=0;board=board.filter(r=>{if(r.every(Boolean)){cleared++;return false}return true});while(board.length<20)board.unshift(Array(10).fill(0));score+=cleared*100;spawn()};
+      const draw=()=>{ctx.fillStyle='#101820';ctx.fillRect(0,0,200,400);ctx.fillStyle='#7ee0c3';board.forEach((r,y)=>r.forEach((v,x)=>{if(v)ctx.fillRect(x*20+1,y*20+1,18,18)}));ctx.fillStyle='#f0a73a';piece.s.forEach((r,y)=>r.forEach((v,x)=>{if(v)ctx.fillRect((piece.x+x)*20+1,(piece.y+y)*20+1,18,18)}))};
+      const tick=()=>{if(!hit(piece,0,1))piece.y++;else lock();draw()};
+      document.addEventListener('keydown',e=>{if(!piece)return;if(e.key==='ArrowLeft'&&!hit(piece,-1,0))piece.x--;if(e.key==='ArrowRight'&&!hit(piece,1,0))piece.x++;if(e.key==='ArrowDown')tick();if(e.key==='ArrowUp'){const s=rot(piece.s);if(!hit(piece,0,0,s))piece.s=s}draw()});
+      const reset=()=>{board=Array.from({length:20},()=>Array(10).fill(0));score=0;info.textContent='Score: 0';spawn();clearInterval(timer);timer=setInterval(()=>{info.textContent='Score: '+score;tick()},500);draw()};
+      body.append(info,c,el('p',{class:'m',style:'text-align:center'},'Arrows: move, down, rotate'));reset();
+    }
+  },
+  laneRacer: {
+    name:'Lane Racer', icon:'🏎️', type:'Game', genre:'Racing', size:'0.4 MB',
+    desc:'Racing. Switch lanes and dodge traffic. Arrow keys or tap.',
+    w:420, h:520,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'280',height:'420'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Score: 0');
+      let lane=1,cars=[],score=0,timer,alive=true;
+      const reset=()=>{lane=1;cars=[];score=0;alive=true;clearInterval(timer);timer=setInterval(step,30)};
+      document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')lane=Math.max(0,lane-1);if(e.key==='ArrowRight')lane=Math.min(2,lane+1)});
+      c.addEventListener('pointerdown',e=>{const r=c.getBoundingClientRect();lane=(e.clientX-r.left)<r.width/2?Math.max(0,lane-1):Math.min(2,lane+1)});
+      const step=()=>{if(Math.random()<.04)cars.push({lane:Math.floor(Math.random()*3),y:-40});cars.forEach(car=>car.y+=6);cars=cars.filter(car=>car.y<460);score++;
+        if(cars.some(car=>car.lane===lane&&car.y>340&&car.y<400)){alive=false;clearInterval(timer);info.textContent='Crashed · '+score}else info.textContent='Score: '+score;draw()};
+      const draw=()=>{ctx.fillStyle='#223';ctx.fillRect(0,0,280,420);ctx.fillStyle='#555';ctx.fillRect(30,0,220,420);ctx.strokeStyle='#fff';ctx.setLineDash([12,12]);ctx.beginPath();ctx.moveTo(103,0);ctx.lineTo(103,420);ctx.moveTo(176,0);ctx.lineTo(176,420);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle='#e85d5d';cars.forEach(car=>ctx.fillRect(40+car.lane*73,car.y,50,28));ctx.fillStyle='#7ee0c3';ctx.fillRect(40+lane*73,360,50,28)};
+      body.append(info,c,el('button',{class:'btn',onclick:reset},'Restart'));reset();
+    }
+  },
+  bumperKarts: {
+    name:'Bumper Yard', icon:'🛻', type:'Game', genre:'Racing', size:'0.4 MB',
+    desc:'Arena karts. Ram the targets before time runs out.',
+    w:460, h:420,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'420',height:'300'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Hits: 0');
+      let x=210,y=150,vx=0,vy=0,score=0,left=30,bots,timer;
+      const reset=()=>{x=210;y=150;vx=vy=score=0;left=30;bots=[{x:80,y:60,vx:2,vy:1},{x:300,y:200,vx:-2,vy:1.4}];clearInterval(timer);timer=setInterval(step,20)};
+      document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')vx-=.4;if(e.key==='ArrowRight')vx+=.4;if(e.key==='ArrowUp')vy-=.4;if(e.key==='ArrowDown')vy+=.4});
+      const step=()=>{x+=vx;y+=vy;vx*=.96;vy*=.96;x=Math.max(12,Math.min(408,x));y=Math.max(12,Math.min(288,y));
+        bots.forEach(b=>{b.x+=b.vx;b.y+=b.vy;if(b.x<12||b.x>408)b.vx*=-1;if(b.y<12||b.y>288)b.vy*=-1;if(Math.hypot(b.x-x,b.y-y)<22){score++;b.x=40+Math.random()*340;b.y=40+Math.random()*220}});
+        left-=.02;info.textContent=left>0?'Hits: '+score+' · '+Math.ceil(left)+'s':'Done · '+score;if(left<=0)clearInterval(timer);draw()};
+      const draw=()=>{ctx.fillStyle='#1b3a2a';ctx.fillRect(0,0,420,300);ctx.fillStyle='#f0a73a';ctx.beginPath();ctx.arc(x,y,10,0,7);ctx.fill();ctx.fillStyle='#e85d5d';bots.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,10,0,7);ctx.fill()})};
+      body.append(info,c,el('p',{class:'m',style:'text-align:center'},'Arrow keys to drive'));reset();
+    }
+  },
+  driftRun: {
+    name:'Drift Line', icon:'🚗', type:'Game', genre:'Driving', size:'0.3 MB',
+    desc:'Driving. Hold left or right to drift and stay on the road.',
+    w:420, h:480,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'320',height:'400'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Drift: 0');
+      let x=160,ang=0,hold=0,score=0,road=0,timer,alive=true;
+      const reset=()=>{x=160;ang=0;score=0;road=0;alive=true;clearInterval(timer);timer=setInterval(step,20)};
+      const set=v=>{hold=v};
+      c.addEventListener('pointerdown',e=>{const r=c.getBoundingClientRect();set((e.clientX-r.left)<r.width/2?-1:1)});
+      c.addEventListener('pointerup',()=>set(0));c.addEventListener('pointerleave',()=>set(0));
+      document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')set(-1);if(e.key==='ArrowRight')set(1)});
+      document.addEventListener('keyup',e=>{if(e.key.startsWith('Arrow'))set(0)});
+      const step=()=>{ang+=hold*.08;x+=ang;road+=2;if(Math.abs(hold))score++;const edge=70+Math.sin(road/80)*40;if(x<edge||x>320-edge){alive=false;clearInterval(timer);info.textContent='Off road · '+score}else info.textContent='Drift: '+score;draw(edge)};
+      const draw=edge=>{ctx.fillStyle='#264';ctx.fillRect(0,0,320,400);ctx.fillStyle='#555';ctx.fillRect(edge,0,320-edge*2,400);ctx.fillStyle='#7ee0c3';ctx.fillRect(x-8,300,16,28)};
+      body.append(info,c,el('button',{class:'btn',onclick:reset},'Restart'));reset();
+    }
+  },
+  rangeDay: {
+    name:'Range Day', icon:'🎯', type:'Game', genre:'FPS', size:'0.3 MB',
+    desc:'Shooting gallery. Click the targets. Misses cost a shot.',
+    w:480, h:420,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'440',height:'300'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Score: 0');
+      let targets=[],score=0,shots=20;
+      const spawn=()=>targets.push({x:30+Math.random()*380,y:30+Math.random()*240,r:16+Math.random()*10});
+      const draw=()=>{ctx.fillStyle='#142028';ctx.fillRect(0,0,440,300);ctx.fillStyle='#e85d5d';targets.forEach(t=>{ctx.beginPath();ctx.arc(t.x,t.y,t.r,0,7);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(t.x,t.y,4,0,7);ctx.fill();ctx.fillStyle='#e85d5d'})};
+      c.addEventListener('pointerdown',e=>{if(shots<=0)return;const r=c.getBoundingClientRect();const x=(e.clientX-r.left)*440/r.width,y=(e.clientY-r.top)*300/r.height;shots--;const i=targets.findIndex(t=>Math.hypot(t.x-x,t.y-y)<t.r);if(i>=0){score+=10;targets.splice(i,1);spawn()}info.textContent='Score: '+score+' · shots '+shots;if(shots<=0)info.textContent='Done · '+score;draw()});
+      const reset=()=>{targets=[];score=0;shots=20;for(let i=0;i<4;i++)spawn();info.textContent='Score: 0 · shots 20';draw()};
+      body.append(info,c,el('button',{class:'btn',onclick:reset},'New range'));reset();
+    }
+  },
+  voidDuel: {
+    name:'Void Ring', icon:'⚔️', type:'Game', genre:'Action', size:'0.3 MB',
+    desc:'Action. Dodge the orbs. Survive as long as you can.',
+    w:440, h:420,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'400',height:'300'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Time: 0');
+      let x=200,y=150,orbs=[],t=0,timer,alive=true;
+      const reset=()=>{x=200;y=150;orbs=[];t=0;alive=true;clearInterval(timer);timer=setInterval(step,20)};
+      c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();x=(e.clientX-r.left)*400/r.width;y=(e.clientY-r.top)*300/r.height});
+      const step=()=>{t++;if(t%25===0)orbs.push({x:Math.random()*400,y:0,vy:1.5+Math.random()*2});orbs.forEach(o=>{o.y+=o.vy});orbs=orbs.filter(o=>o.y<320);
+        if(orbs.some(o=>Math.hypot(o.x-x,o.y-y)<16)){alive=false;clearInterval(timer);info.textContent='Hit · '+(t/50).toFixed(1)+'s'}else info.textContent='Time: '+(t/50).toFixed(1)+'s';draw()};
+      const draw=()=>{ctx.fillStyle='#140818';ctx.fillRect(0,0,400,300);ctx.fillStyle='#b04a7a';orbs.forEach(o=>{ctx.beginPath();ctx.arc(o.x,o.y,8,0,7);ctx.fill()});ctx.fillStyle='#fff';ctx.fillRect(x-6,y-6,12,12)};
+      body.append(info,c,el('button',{class:'btn',onclick:reset},'Restart'));reset();
+    }
+  },
+  darkHall: {
+    name:'Dark Hall', icon:'👻', type:'Game', genre:'Horror', size:'0.3 MB',
+    desc:'Horror. Move the light, find the exit, avoid the shadow.',
+    w:440, h:420,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'400',height:'300'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Find the door');
+      let x=40,y=150,sx=300,sy=40,door={x:360,y:240},over=false;
+      const draw=()=>{ctx.fillStyle='#05070a';ctx.fillRect(0,0,400,300);ctx.fillStyle='#1c3d2e';ctx.fillRect(door.x,door.y,24,36);ctx.save();ctx.beginPath();ctx.arc(x,y,54,0,7);ctx.clip();ctx.fillStyle='#243044';ctx.fillRect(0,0,400,300);ctx.fillStyle='#9ad';ctx.fillRect(door.x,door.y,24,36);ctx.fillStyle='#e85d5d';ctx.fillRect(sx,sy,16,16);ctx.restore();ctx.strokeStyle='#ffffff33';ctx.strokeRect(8,8,384,284)};
+      c.addEventListener('pointermove',e=>{if(over)return;const r=c.getBoundingClientRect();x=(e.clientX-r.left)*400/r.width;y=(e.clientY-r.top)*300/r.height;sx+=(x-sx)*.02;sy+=(y-sy)*.02;if(Math.hypot(sx-x,sy-y)<18){over=true;info.textContent='The shadow caught you'}else if(Math.hypot(door.x+12-x,door.y+18-y)<24){over=true;info.textContent='You found the door'}draw()});
+      body.append(info,c,el('button',{class:'btn',onclick:()=>{x=40;y=150;sx=300;sy=40;over=false;info.textContent='Find the door';draw()}},'Restart'));draw();
+    }
+  },
+  slide15: {
+    name:'Slide 15', icon:'🧩', type:'Game', genre:'Puzzle', size:'0.3 MB',
+    desc:'Puzzle. Slide the tiles into order.',
+    w:400, h:460,
+    open(body){
+      let b=[],moves=0;const grid=el('div',{class:'g2048',style:'grid-template-columns:repeat(4,58px)'}),info=el('div',{class:'gameinfo'},'Moves: 0');
+      const draw=()=>grid.replaceChildren(...b.map((n,i)=>el('button',{class:'t2048',style:'height:58px;background:'+(n?'#efe6d4':'transparent'),onclick:()=>move(i)},n||'')));
+      const move=i=>{const z=b.indexOf(0);const zr=Math.floor(z/4),zc=z%4,r=Math.floor(i/4),c=i%4;if(Math.abs(zr-r)+Math.abs(zc-c)!==1)return;b[z]=b[i];b[i]=0;moves++;info.textContent='Moves: '+moves+(b.slice(0,15).every((n,k)=>n===k+1)?' · solved':'');draw()};
+      const reset=()=>{b=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0];for(let i=0;i<80;i++)move(Math.floor(Math.random()*16));moves=0;info.textContent='Moves: 0';draw()};
+      body.append(info,grid,el('button',{class:'btn',onclick:reset},'Shuffle'));reset();
+    }
+  },
+  wordSketch: {
+    name:'Word Sketch', icon:'✏️', type:'Game', genre:'Puzzle', size:'0.3 MB',
+    desc:'Puzzle. Guess the hidden word. One letter at a time.',
+    w:400, h:360,
+    open(body){
+      const words=['bridge','castle','orbit','market','garden','signal','pocket','winter'];
+      let word,used,shown;const out=el('div',{class:'clockbig',style:'font-size:28px;letter-spacing:4px'}),inp=el('input',{class:'in',maxlength:'1',style:'width:60px'}),msg=el('p',{class:'m',style:'text-align:center'});
+      const draw=()=>{out.textContent=word.split('').map(ch=>used.has(ch)?ch:'_').join(' ');msg.textContent='Used: '+[...used].join(' ')};
+      const guess=()=>{const ch=(inp.value||'').toLowerCase();inp.value='';if(!ch||used.has(ch))return;used.add(ch);draw();if(word.split('').every(c=>used.has(c)))msg.textContent='Solved: '+word};
+      const reset=()=>{word=words[Math.floor(Math.random()*words.length)];used=new Set();draw()};
+      inp.onkeydown=e=>{if(e.key==='Enter')guess()};
+      body.append(out,el('div',{class:'gamekeys'},inp,el('button',{class:'btn pri',onclick:guess},'Guess'),el('button',{class:'btn',onclick:reset},'New')),msg);reset();
+    }
+  },
+  blobEat: {
+    name:'Blob Pit', icon:'🟢', type:'Game', genre:'.io', size:'0.4 MB',
+    desc:'.io style. Eat dots to grow. Do not touch the bigger blob.',
+    w:460, h:420,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'420',height:'300'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Size: 12');
+      let x=210,y=150,r=12,dots,enemy,timer,alive=true;
+      const reset=()=>{x=210;y=150;r=12;alive=true;dots=Array.from({length:25},()=>({x:Math.random()*420,y:Math.random()*300}));enemy={x:40,y:40,r:16};clearInterval(timer);timer=setInterval(step,20)};
+      c.addEventListener('pointermove',e=>{const rect=c.getBoundingClientRect();x+=( (e.clientX-rect.left)*420/rect.width - x)*.15;y+=( (e.clientY-rect.top)*300/rect.height - y)*.15});
+      const step=()=>{if(!alive)return;dots=dots.filter(d=>{if(Math.hypot(d.x-x,d.y-y)<r){r+=.4;return false}return true});if(dots.length<18)dots.push({x:Math.random()*420,y:Math.random()*300});
+        enemy.x+=(x-enemy.x)*.01;enemy.y+=(y-enemy.y)*.01;enemy.r+=.01;info.textContent='Size: '+r.toFixed(1);if(Math.hypot(enemy.x-x,enemy.y-y)<enemy.r+r&&enemy.r>r){alive=false;clearInterval(timer);info.textContent='Eaten at '+r.toFixed(1)}draw()};
+      const draw=()=>{ctx.fillStyle='#102028';ctx.fillRect(0,0,420,300);ctx.fillStyle='#f0a73a';dots.forEach(d=>{ctx.beginPath();ctx.arc(d.x,d.y,3,0,7);ctx.fill()});ctx.fillStyle='#e85d5d';ctx.beginPath();ctx.arc(enemy.x,enemy.y,enemy.r,0,7);ctx.fill();ctx.fillStyle='#7ee0c3';ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill()};
+      body.append(info,c,el('button',{class:'btn',onclick:reset},'Restart'));reset();
+    }
+  },
+  blockBox: {
+    name:'Block Box', icon:'🧱', type:'Game', genre:'Sandbox', size:'0.4 MB',
+    desc:'Sandbox. Place and remove blocks on a grid. Saved on this device.',
+    w:460, h:460,
+    open(body){
+      const key='lanpc.blocks';let grid=JSON.parse(localStorage.getItem(key)||'null')||Array.from({length:12},()=>Array(12).fill(0));
+      const colors=['#1b2428','#3a7d52','#c0392b','#3f6fb5','#f0a73a','#b04a7a'];let paint=1;
+      const box=el('div',{style:'display:grid;grid-template-columns:repeat(12,24px);gap:2px;justify-content:center;padding:8px'});
+      const draw=()=>{localStorage.setItem(key,JSON.stringify(grid));box.replaceChildren(...grid.flatMap((row,y)=>row.map((v,x)=>el('button',{style:'width:24px;height:24px;border:0;background:'+colors[v],onclick:()=>{grid[y][x]=grid[y][x]===paint?0:paint;draw()}}))))};
+      body.append(el('div',{class:'tool'},...colors.slice(1).map((col,i)=>el('button',{class:'btn',style:'background:'+col,onclick:()=>{paint=i+1}},' '))),box,el('button',{class:'btn',onclick:()=>{grid=Array.from({length:12},()=>Array(12).fill(0));draw()}},'Clear'));draw();
+    }
+  },
+  hoopShot: {
+    name:'Hoop Shot', icon:'🏀', type:'Game', genre:'Sports', size:'0.3 MB',
+    desc:'Sports. Time the shot and sink the ball.',
+    w:420, h:400,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'380',height:'260'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Score: 0');
+      let power=0,up=true,score=0,ball=null,timer;
+      const draw=()=>{ctx.fillStyle='#1a2a38';ctx.fillRect(0,0,380,260);ctx.strokeStyle='#fff';ctx.strokeRect(250,40,46,8);ctx.beginPath();ctx.moveTo(250,48);ctx.lineTo(250,90);ctx.moveTo(296,48);ctx.lineTo(296,90);ctx.stroke();ctx.fillStyle='#f0a73a';ctx.fillRect(20,200,80*(power/100),8);if(ball){ctx.beginPath();ctx.arc(ball.x,ball.y,8,0,7);ctx.fill()}};
+      const step=()=>{if(!ball){power+=up?2:-2;if(power>100||power<0)up=!up;draw();return}ball.x+=ball.vx;ball.y+=ball.vy;ball.vy+=.18;if(ball.x>248&&ball.x<296&&ball.y>40&&ball.y<56&&ball.vy>0){score++;info.textContent='Score: '+score;ball=null}else if(ball.y>260)ball=null;draw()};
+      c.addEventListener('pointerdown',()=>{if(!ball)ball={x:40,y:200,vx:3.2+power/40,vy:-6.2}});
+      timer=setInterval(step,20);body.append(info,c,el('p',{class:'m',style:'text-align:center'},'Click to shoot when the bar is high'));draw();
+    }
+  },
+  poolShot: {
+    name:'Corner Pocket', icon:'🎱', type:'Game', genre:'Sports', size:'0.3 MB',
+    desc:'Sports. Aim with the mouse and click to sink the ball.',
+    w:440, h:400,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'400',height:'240'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Shots: 0');
+      let ball={x:120,y:120},aim={x:200,y:120},moving=false,vx=0,vy=0,shots=0;
+      const pockets=[{x:12,y:12},{x:388,y:12},{x:12,y:228},{x:388,y:228}];
+      const draw=()=>{ctx.fillStyle='#1d6b45';ctx.fillRect(0,0,400,240);ctx.fillStyle='#111';pockets.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,12,0,7);ctx.fill()});ctx.strokeStyle='#fff';ctx.beginPath();ctx.moveTo(ball.x,ball.y);ctx.lineTo(aim.x,aim.y);ctx.stroke();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(ball.x,ball.y,8,0,7);ctx.fill()};
+      c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();aim={x:(e.clientX-r.left)*400/r.width,y:(e.clientY-r.top)*240/r.height};if(!moving)draw()});
+      c.addEventListener('pointerdown',()=>{if(moving)return;shots++;vx=(aim.x-ball.x)*.04;vy=(aim.y-ball.y)*.04;moving=true;info.textContent='Shots: '+shots});
+      setInterval(()=>{if(!moving)return;ball.x+=vx;ball.y+=vy;vx*=.98;vy*=.98;if(ball.x<10||ball.x>390)vx*=-1;if(ball.y<10||ball.y>230)vy*=-1;if(Math.hypot(vx,vy)<.2)moving=false;if(pockets.some(p=>Math.hypot(p.x-ball.x,p.y-ball.y)<16)){info.textContent='Pocket in '+shots;ball={x:120,y:120};moving=false}draw()},20);draw();body.append(info,c);
+    }
+  },
+  chessLite: {
+    name:'Chess Lite', icon:'♟️', type:'Game', genre:'Strategy', size:'0.5 MB',
+    desc:'Strategy. Play chess against a simple computer. No castling.',
+    w:460, h:540,
+    open(body){
+      const start='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
+      let board=[],sel=null,turn='w',over=false;const grid=el('div',{style:'display:grid;grid-template-columns:repeat(8,36px);justify-content:center'}),info=el('div',{class:'gameinfo'},'You are white');
+      const parse=fen=>fen.split('/').map(row=>{const a=[];for(const ch of row){if(/\d/.test(ch))for(let i=0;i<+ch;i++)a.push('');else a.push(ch)}return a});
+      const glyph={K:'♔',Q:'♕',R:'♖',B:'♗',N:'♘',P:'♙',k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'};
+      const side=p=>p&&p===p.toUpperCase()?'w':'b';
+      function moves(x,y){const p=board[y][x];if(!p)return[];const s=side(p),out=[],add=(xx,yy)=>{if(xx<0||yy<0||xx>7||yy>7)return false;const t=board[yy][xx];if(!t){out.push([xx,yy]);return true}if(side(t)!==s)out.push([xx,yy]);return false};const slide=(dx,dy)=>{for(let i=1;i<8;i++)if(!add(x+dx*i,y+dy*i))break};const u=p.toUpperCase();
+        if(u==='P'){const dir=s==='w'?-1:1;if(!board[y+dir]?.[x])out.push([x,y+dir]);if(y===(s==='w'?6:1)&&!board[y+dir]?.[x]&&!board[y+dir*2]?.[x])out.push([x,y+dir*2]);[ -1,1].forEach(dx=>{const t=board[y+dir]?.[x+dx];if(t&&side(t)!==s)out.push([x+dx,y+dir])})}
+        if(u==='N')[[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]].forEach(([dx,dy])=>add(x+dx,y+dy));
+        if(u==='B'||u==='Q')[[1,1],[1,-1],[-1,1],[-1,-1]].forEach(([dx,dy])=>slide(dx,dy));
+        if(u==='R'||u==='Q')[[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>slide(dx,dy));
+        if(u==='K')[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]].forEach(([dx,dy])=>add(x+dx,y+dy));
+        return out}
+      const draw=()=>grid.replaceChildren(...board.flatMap((row,y)=>row.map((p,x)=>el('button',{style:'width:36px;height:36px;border:0;font-size:22px;background:'+((x+y)%2?'#8aa':'#efe')+(sel&&sel[0]===x&&sel[1]===y?';outline:2px solid #f0a73a':''),onclick:()=>click(x,y)},glyph[p]||''))));
+      const ai=()=>{const all=[];board.forEach((row,y)=>row.forEach((p,x)=>{if(side(p)==='b')moves(x,y).forEach(m=>all.push([x,y,m]))}));if(!all.length){over=true;info.textContent='You win';return}const pick=all[Math.floor(Math.random()*all.length)];board[pick[2][1]][pick[2][0]]=board[pick[1]][pick[0]];board[pick[1]][pick[0]]='';if(board.flat().includes('K')===false){over=true;info.textContent='Computer wins'}else info.textContent='Your turn';draw()};
+      const click=(x,y)=>{if(over||turn!=='w')return;const p=board[y][x];if(sel){const ok=moves(sel[0],sel[1]).some(m=>m[0]===x&&m[1]===y);if(ok){board[y][x]=board[sel[1]][sel[0]];board[sel[1]][sel[0]]='';sel=null;if(!board.flat().includes('k')){over=true;info.textContent='You win';draw();return}turn='b';draw();setTimeout(()=>{ai();turn='w'},200);return}}if(side(p)==='w')sel=[x,y];else sel=null;draw()};
+      const reset=()=>{board=parse(start);sel=null;turn='w';over=false;info.textContent='You are white';draw()};
+      body.append(info,grid,el('button',{class:'btn',onclick:reset},'New game'));reset();
+    }
+  },
+  duoDoors: {
+    name:'Two Doors', icon:'🗺️', type:'Game', genre:'Adventure', size:'0.3 MB',
+    desc:'Adventure. Switch characters and stand on both switches.',
+    w:440, h:400,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'400',height:'260'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'A/D move · Space switch');
+      let who=0,pos=[{x:40,y:180},{x:120,y:180}],done=false;
+      const pads=[{x:250,y:190,who:0},{x:320,y:190,who:1}];
+      const draw=()=>{ctx.fillStyle='#203040';ctx.fillRect(0,0,400,260);ctx.fillStyle='#345';ctx.fillRect(0,210,400,50);pads.forEach(p=>{ctx.fillStyle='#f0a73a';ctx.fillRect(p.x,p.y,28,10)});pos.forEach((p,i)=>{ctx.fillStyle=i?'#5b7cff':'#e85d5d';ctx.fillRect(p.x,p.y,18,28);if(i===who){ctx.strokeStyle='#fff';ctx.strokeRect(p.x-2,p.y-2,22,32)}});ctx.fillStyle='#7ee0c3';ctx.fillRect(350,150,28,50)};
+      document.addEventListener('keydown',e=>{if(done)return;if(e.key===' '||e.key==='w')who=1-who;if(e.key==='a'||e.key==='ArrowLeft')pos[who].x=Math.max(10,pos[who].x-12);if(e.key==='d'||e.key==='ArrowRight')pos[who].x=Math.min(360,pos[who].x+12);const ok=pads.every(p=>Math.abs(pos[p.who].x-p.x)<20);if(ok){done=true;info.textContent='Door open'}draw()});
+      body.append(info,c,el('p',{class:'m',style:'text-align:center'},'Red and blue must stand on the pads'));draw();
+    }
+  },
+  rhythmTap: {
+    name:'Neon Tap', icon:'🎵', type:'Game', genre:'Rhythm', size:'0.3 MB',
+    desc:'Rhythm. Tap when the bar hits the line.',
+    w:400, h:360,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'360',height:'200'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Score: 0');
+      let x=0,dir=1,score=0,timer;
+      const draw=()=>{ctx.fillStyle='#140818';ctx.fillRect(0,0,360,200);ctx.strokeStyle='#f0a73a';ctx.strokeRect(160,20,40,160);ctx.fillStyle='#7ee0c3';ctx.fillRect(x,40,16,120)};
+      const hit=()=>{const d=Math.abs(x-172);if(d<18)score+=10;else if(d<36)score+=4;else score=Math.max(0,score-2);info.textContent='Score: '+score};
+      const reset=()=>{x=0;score=0;clearInterval(timer);timer=setInterval(()=>{x+=dir*4;if(x>340||x<0)dir*=-1;draw()},16)};
+      c.addEventListener('pointerdown',hit);body.append(info,c,el('button',{class:'btn pri',onclick:hit},'Tap'),el('button',{class:'btn',onclick:reset},'Restart'));reset();
+    }
+  },
+  tinyTycoon: {
+    name:'Tiny Tycoon', icon:'🏭', type:'Game', genre:'Simulation', size:'0.3 MB',
+    desc:'Simulation. Buy stands, earn coins, grow the lot.',
+    w:400, h:380,
+    open(body){
+      let coins=0,stands=1,timer;const out=el('div',{class:'clockbig'},'0'),msg=el('p',{class:'m',style:'text-align:center'},'1 stand');
+      const tick=()=>{coins+=stands;out.textContent=coins;msg.textContent=stands+' stand'+(stands>1?'s':'')+' · +'+stands+'/s'};
+      body.append(out,msg,el('div',{class:'gamekeys'},el('button',{class:'btn pri',onclick:()=>{if(coins<25*stands)return;coins-=25*stands;stands++;tick()}},'Buy stand (cost rises)'),el('button',{class:'btn',onclick:()=>{coins=0;stands=1;tick()}},'Reset')));
+      timer=setInterval(tick,1000);tick();
+    }
+  },
+  solitaire: {
+    name:'Solitaire', icon:'🃏', type:'Game', genre:'Cards', size:'0.4 MB',
+    desc:'Cards. Draw cards and build four piles from Ace to King.',
+    w:460, h:420,
+    open(body){
+      const ranks='A23456789TJQK',suits=['♠','♥','♦','♣'];
+      let deck,piles,waste,msg;const box=el('div',{class:'pane'}),info=el('div',{class:'gameinfo'},'Build A to K by suit');
+      const top=p=>p[p.length-1];
+      const drawUI=()=>box.replaceChildren(el('p',{},'Deck '+deck.length+' · waste '+(top(waste)?top(waste).r+top(waste).s:'empty')),
+        el('div',{class:'gamekeys'},...piles.map((p,i)=>el('button',{class:'btn',onclick:()=>place(i)},(top(p)?top(p).r+top(p).s:'empty')+' ('+p.length+')'))));
+      const place=i=>{const card=top(waste);if(!card)return;const pile=piles[i];const need=pile.length?ranks[ranks.indexOf(top(pile).r)+1]:'A';if(card.r===need&&(!pile.length||top(pile).s===card.s)){pile.push(waste.pop());if(piles.every(x=>x.length===13))info.textContent='Cleared';drawUI()}};
+      const reset=()=>{deck=[];suits.forEach(s=>ranks.split('').forEach(r=>deck.push({r,s})));deck.sort(()=>Math.random()-.5);piles=[[],[],[],[]];waste=[];info.textContent='Build A to K by suit';drawUI()};
+      body.append(info,box,el('div',{class:'gamekeys'},el('button',{class:'btn pri',onclick:()=>{if(deck.length)waste.push(deck.pop());drawUI()}},'Draw'),el('button',{class:'btn',onclick:reset},'New')));reset();
+    }
+  },
+  fourColors: {
+    name:'Four Colors', icon:'🎴', type:'Game', genre:'Cards', size:'0.4 MB',
+    desc:'Cards. Match color or number. First to empty a hand wins.',
+    w:460, h:420,
+    open(body){
+      const colors=['red','blue','green','gold'],nums=[1,2,3,4,5];
+      let deck,hand,ai,top,info;const box=el('div',{class:'pane'});
+      const card=()=>deck.pop();
+      const playable=c=>c.color===top.color||c.n===top.n;
+      const drawUI=()=>box.replaceChildren(el('p',{},'Top: '+top.color+' '+top.n+' · computer '+ai.length),el('div',{class:'gamekeys'},...hand.map((c,i)=>el('button',{class:'btn',disabled:!playable(c),onclick:()=>play(i)},c.color+' '+c.n))));
+      const play=i=>{const c=hand.splice(i,1)[0];top=c;if(!hand.length){info.textContent='You win';box.textContent='You win';return}aiTurn();drawUI()};
+      const aiTurn=()=>{let i=ai.findIndex(playable);if(i<0){if(deck.length)ai.push(card());i=ai.findIndex(playable)}if(i>=0){top=ai.splice(i,1)[0];if(!ai.length)info.textContent='Computer wins'}};
+      const reset=()=>{deck=[];colors.forEach(color=>nums.forEach(n=>{deck.push({color,n});deck.push({color,n})}));deck.sort(()=>Math.random()-.5);hand=[card(),card(),card(),card(),card()];ai=[card(),card(),card(),card(),card()];top=card();info.textContent='Match color or number';drawUI()};
+      info=el('div',{class:'gameinfo'},'Match');body.append(info,box,el('button',{class:'btn',onclick:()=>{if(deck.length)hand.push(card());drawUI()}},'Draw'),el('button',{class:'btn',onclick:reset},'New'));reset();
+    }
+  },
+  stickBrawl: {
+    name:'Stick Brawl', icon:'👊', type:'Game', genre:'Fighting', size:'0.4 MB',
+    desc:'Fighting. Move, jump, and punch. First to 5 hits wins.',
+    w:480, h:400,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'440',height:'240'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'You 0 · CPU 0');
+      let px=80,py=180,vx=0,vy=0,ex=320,ev=1,punch=0,hp=[0,0],timer;
+      const reset=()=>{px=80;ex=320;hp=[0,0];clearInterval(timer);timer=setInterval(step,20)};
+      document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')vx=-3;if(e.key==='ArrowRight')vx=3;if(e.key==='ArrowUp'&&py>=180)vy=-7;if(e.key===' ')punch=8});
+      document.addEventListener('keyup',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight')vx=0});
+      const step=()=>{px=Math.max(20,Math.min(400,px+vx));vy+=.35;py=Math.min(180,py+vy);if(py>=180)vy=0;if(punch)punch--;ex+=ev;if(ex<160||ex>400)ev*=-1;if(punch&&Math.abs(px-ex)<28&&Math.abs(py-180)<8){hp[0]++;punch=0;ex+=40}if(Math.abs(px-ex)<16&&Math.random()<.05)hp[1]++;info.textContent='You '+hp[0]+' · CPU '+hp[1]+(hp[0]>=5?' · you win':hp[1]>=5?' · cpu wins':'');if(hp[0]>=5||hp[1]>=5)clearInterval(timer);draw()};
+      const draw=()=>{ctx.fillStyle='#203040';ctx.fillRect(0,0,440,240);ctx.fillStyle='#888';ctx.fillRect(0,210,440,30);ctx.fillStyle='#7ee0c3';ctx.fillRect(px,py,10,30);if(punch)ctx.fillRect(px+10,py+8,16,6);ctx.fillStyle='#e85d5d';ctx.fillRect(ex,180,10,30)};
+      body.append(info,c,el('p',{class:'m',style:'text-align:center'},'Arrows move/jump · Space punch'));reset();
+    }
+  },
+  nightCamp: {
+    name:'Night Camp', icon:'🧟', type:'Game', genre:'Survival', size:'0.3 MB',
+    desc:'Survival. Keep the fire fed for 60 seconds.',
+    w:400, h:360,
+    open(body){
+      let fire=40,time=60,timer;const bar=el('div',{class:'meter'},el('i',{style:'width:40%'})),info=el('div',{class:'gameinfo'},'60s');
+      const tick=()=>{fire=Math.max(0,fire-1.4);time-=.25;bar.firstChild.style.width=fire+'%';info.textContent=fire<=0?'Fire out':time<=0?'You lasted the night':Math.ceil(time)+'s · fire '+Math.round(fire);if(fire<=0||time<=0)clearInterval(timer)};
+      const reset=()=>{fire=40;time=60;clearInterval(timer);timer=setInterval(tick,250)};
+      body.append(info,el('div',{class:'pane'},el('h3',{},'Fire'),bar,el('button',{class:'btn pri',onclick:()=>fire=Math.min(100,fire+12)},'Add wood')));reset();
+    }
+  },
+  starMerge: {
+    name:'Star Merge', icon:'🚀', type:'Game', genre:'Space', size:'0.3 MB',
+    desc:'Space. Merge same stars. Do not fill the board.',
+    w:400, h:460,
+    open(body){
+      let b=Array(16).fill(0),score=0;const grid=el('div',{class:'g2048'}),info=el('div',{class:'gameinfo'},'Score: 0');
+      const add=()=>{const xs=b.map((v,i)=>v?null:i).filter(v=>v!==null);if(!xs.length){info.textContent='Full · '+score;return false}b[xs[Math.floor(Math.random()*xs.length)]]=1;return true};
+      const draw=()=>grid.replaceChildren(...b.map((v,i)=>el('button',{class:'t2048',onclick:()=>tap(i)},v? '★'+v :'')));
+      const tap=i=>{if(!b[i])return;const j=b.findIndex((v,k)=>k!==i&&v===b[i]);if(j<0)return;b[j]=b[i]+1;b[i]=0;score+=b[j];info.textContent='Score: '+score;add();draw()};
+      const reset=()=>{b=Array(16).fill(0);score=0;add();add();info.textContent='Score: 0';draw()};
+      body.append(info,grid,el('p',{class:'m',style:'text-align:center'},'Tap a star, it merges with a match'),el('button',{class:'btn',onclick:reset},'New'));reset();
+    }
+  },
+  redHop: {
+    name:'Red Hop', icon:'🔴', type:'Game', genre:'Platformer', size:'0.4 MB',
+    desc:'Platformer. Jump the gaps. Space or click.',
+    w:440, h:400,
+    open(body){
+      const c=el('canvas',{class:'gamecanvas',width:'400',height:'240'}),ctx=c.getContext('2d'),info=el('div',{class:'gameinfo'},'Score: 0');
+      let y=150,vy=0,obs=[],score=0,timer,alive=true;
+      const reset=()=>{y=150;vy=0;obs=[{x:400}];score=0;alive=true;clearInterval(timer);timer=setInterval(step,20)};
+      const jump=()=>{if(y>=150)vy=-7};
+      document.addEventListener('keydown',e=>{if(e.key===' '){e.preventDefault();jump()}});c.addEventListener('pointerdown',jump);
+      const step=()=>{vy+=.3;y=Math.min(150,y+vy);obs.forEach(o=>o.x-=4);if(obs[obs.length-1].x<220)obs.push({x:400+Math.random()*80});obs=obs.filter(o=>o.x>-20);score++;
+        if(obs.some(o=>o.x<70&&o.x>40&&y>130)){alive=false;clearInterval(timer);info.textContent='Fell · '+score}else info.textContent='Score: '+score;draw()};
+      const draw=()=>{ctx.fillStyle='#87c6e8';ctx.fillRect(0,0,400,240);ctx.fillStyle='#3a7d52';ctx.fillRect(0,190,400,50);ctx.fillStyle='#2a4a32';obs.forEach(o=>ctx.clearRect(o.x,180,28,20));ctx.fillStyle='#e85d5d';ctx.fillRect(50,y,16,16)};
+      body.append(info,c,el('button',{class:'btn',onclick:reset},'Restart'));reset();
+    }
+  },
+  quizLan: {
+    name:'Lan Quiz', icon:'🧠', type:'Game', genre:'Trivia', size:'0.3 MB',
+    desc:'Trivia. Ten questions about computers, maps and everyday facts.',
+    w:440, h:400,
+    open(body){
+      const qs=[['How many bits in a byte?','8',['8','4','16','32']],['Capital of Japan?','Tokyo',['Tokyo','Osaka','Kyoto','Seoul']],['LAN stands for?','Local Area Network',['Local Area Network','Large Access Node','Linked App Net','Light Area Net']],['Which planet is red?','Mars',['Mars','Venus','Jupiter','Mercury']],['HTTP port?','80',['80','21','25','443']],['A triangle has how many sides?','3',['3','4','5','6']],['Water freezes at °C?','0',['0','32','100','-10']],['Binary 10 is?','2',['2','10','8','16']],['Biggest ocean?','Pacific',['Pacific','Atlantic','Indian','Arctic']],['CSS is used for?','Style',['Style','Storage','Sockets','Sound']]];
+      let i=0,score=0;const box=el('div',{class:'pane'}),info=el('div',{class:'gameinfo'},'Question 1');
+      const show=()=>{if(i>=qs.length){box.replaceChildren(el('h3',{},'Score '+score+' / '+qs.length));return}const q=qs[i];info.textContent='Question '+(i+1);box.replaceChildren(el('h3',{},q[0]),el('div',{class:'gamekeys'},...q[2].map(a=>el('button',{class:'btn',onclick:()=>{if(a===q[1])score++;i++;show()}},a))))};
+      body.append(info,box,el('button',{class:'btn',onclick:()=>{i=0;score=0;show()}},'Restart'));show();
+    }
   }
+
 };
 
 function storeInstalled(){
-  try{return JSON.parse(localStorage.getItem(StoreInstalledKey)||'[]').filter(id=>StoreApps[id])}catch{return[]}
+  try{return JSON.parse(localStorage.getItem(StoreInstalledKey)||'[]').filter(id=>StoreApps[id] || id.startsWith('user:'))}catch{return[]}
 }
 function saveStoreInstalled(a){localStorage.setItem(StoreInstalledKey,JSON.stringify(a))}
 function storeInstall(id){
@@ -608,35 +1508,147 @@ function storeUninstall(id){
 function refreshStoreDesktop(){
   const box=$('#icons'); if(!box)return;
   box.querySelectorAll('[data-store-app]').forEach(x=>x.remove());
-  storeInstalled().forEach(id=>{const a=StoreApps[id];box.append(el('button',{class:'icon','data-store-app':id,onclick:()=>openApp(a)},el('b',{},a.icon),el('span',{},a.name)))});
+  storeInstalled().forEach(id=>{
+    const a = id.startsWith('user:') ? userApp(id.slice(5)) : StoreApps[id];
+    if (!a) return;
+    box.append(el('button',{class:'icon','data-store-app':id,onclick:()=>openApp(a)},el('b',{},a.icon),el('span',{},a.name)));
+  });
 }
-function openStoreItem(id){openApp(StoreApps[id])}
+function openStoreItem(id){ openApp(id.startsWith('user:') ? userApp(id.slice(5)) : StoreApps[id]); }
+
+
+function makeBrowser(body, startUrl) {
+  const addr = el('input', { class: 'in', style: 'flex:1', placeholder: 'Search or enter a URL', spellcheck: 'false' });
+  const frame = el('iframe', { class: 'browserframe' });
+  const status = el('span', { class: 'm' });
+  const fallback = el('div', { class: 'mediaempty', style: 'display:none' });
+  const hist = []; let at = -1;
+  const searchUrl = q => 'https://duckduckgo.com/?q=' + encodeURIComponent(q);
+  const normalize = raw => {
+    const v = (raw || '').trim();
+    if (!v) return '';
+    if (/^https?:\/\//i.test(v)) return v;
+    if (v.includes(' ') || !v.includes('.')) return searchUrl(v);
+    return 'https://' + v;
+  };
+  const needsWindow = url => /youtube\.com|youtu\.be|crazygames\.com|dosgames\.com|accounts\.google\.com/i.test(url);
+  const outside = url => window.open(url, '_blank', 'noopener,noreferrer');
+  const showOutside = url => {
+    frame.style.display = 'none';
+    fallback.style.display = 'grid';
+    fallback.replaceChildren(
+      el('b', {}, 'This site will not run inside the LanPC window'),
+      el('p', {}, 'YouTube, Crazy Games and DOOM block embedded players. Open them in a normal browser window.'),
+      el('button', { class: 'btn pri', onclick: () => outside(url) }, 'Open site'));
+    status.textContent = 'Opened outside LanPC';
+  };
+  const go = (raw, push = true) => {
+    const url = normalize(raw);
+    if (!url) return;
+    addr.value = url;
+    if (push) { hist.splice(at + 1); hist.push(url); at = hist.length - 1; }
+    if (needsWindow(url)) { showOutside(url); outside(url); return; }
+    fallback.style.display = 'none';
+    frame.style.display = 'block';
+    status.textContent = 'Loading…';
+    frame.src = url;
+  };
+  frame.addEventListener('load', () => { status.textContent = ''; });
+  addr.onkeydown = e => { if (e.key === 'Enter') go(addr.value); };
+  body.append(el('div', { class: 'tool' },
+    el('button', { class: 'btn', title: 'Back', onclick: () => { if (at > 0) { at--; go(hist[at], false); } } }, '←'),
+    el('button', { class: 'btn', title: 'Forward', onclick: () => { if (at < hist.length - 1) { at++; go(hist[at], false); } } }, '→'),
+    el('button', { class: 'btn', title: 'Reload', onclick: () => go(addr.value || startUrl, false) }, '↻'),
+    addr,
+    el('button', { class: 'btn pri', onclick: () => go(addr.value) }, 'Go'),
+    el('button', { class: 'btn', onclick: () => outside(normalize(addr.value) || startUrl) }, 'Open outside'),
+    status), fallback, frame);
+  go(startUrl || 'https://duckduckgo.com/');
+}
+function siteLauncher(name, icon, url, text) {
+  return { name, icon, w: 560, h: 360, open(body) {
+    const open = () => window.open(url, '_blank', 'noopener,noreferrer');
+    body.append(el('div', { class: 'pane' },
+      el('h3', {}, name),
+      el('p', {}, text),
+      el('p', { class: 'm' }, url),
+      el('div', {}, el('button', { class: 'btn pri', onclick: open }, 'Open ' + name))));
+  } };
+}
+Apps.browser = { name: 'Browser', icon: '🌐', w: 980, h: 640, open(body, w, opts) { makeBrowser(body, (opts && opts.url) || 'https://duckduckgo.com/'); } };
+function webApp(name, icon, url, text) {
+  return { name, icon, w: 980, h: 640, open(body) {
+    const frame = el('iframe', { class: 'browserframe', src: url });
+    body.append(el('div', { class: 'tool' },
+      el('a', { class: 'btn pri', href: url, target: '_blank', rel: 'noopener noreferrer' }, 'Open ' + name),
+      el('span', { class: 'm' }, text)), frame);
+  } };
+}
+Apps.crazy = webApp('Crazy Games', '🕹️', 'https://www.crazygames.com/', 'If the page stays blank, click Open Crazy Games. That site blocks embedded windows.');
+Apps.doom = webApp('DOOM', '👾', 'https://dos.zone/doom-dec-1993/', 'DOOM on DOS Zone: DOOM | DOS games in browser. Click Open DOOM if the player does not appear here.');
+
+let userApps = [];
+async function loadUserApps() {
+  try { userApps = await (await api('/api/userapps')).json(); } catch (e) { userApps = []; }
+}
+function userRecord(id) { return userApps.find(a => a.id === id); }
+function userApp(id) {
+  const a = userRecord(id); if (!a) return null;
+  return { name: a.name, icon: a.icon || '📦', w: 860, h: 600, open(body) {
+    body.append(el('iframe', { class: 'browserframe', src: '/userapps/' + encodeURIComponent(a.id) + '/' + a.entry.split('/').map(encodeURIComponent).join('/') }));
+  } };
+}
+function storeInstalled(){
+  try{return JSON.parse(localStorage.getItem(StoreInstalledKey)||'[]').filter(id=>StoreApps[id] || (id.startsWith('user:') && userRecord(id.slice(5))))}catch{return[]}
+}
 
 Apps.store = {name:'App Store',icon:'🛍️',w:720,h:520,open(body,w){
-  let category='All', query='';
+  let category='All', query='', genre='';
   const search=el('input',{class:'in',placeholder:'Search apps and games…'});
   const grid=el('div',{class:'storegrid'});
   const tabs=el('div',{class:'storetabs'});
-  const cats=['All','App','Game'];
-  const render=()=>{
-    const installed=storeInstalled();
-    const list=Object.entries(StoreApps).filter(([id,a])=>(category==='All'||a.type===category)&&(!query||a.name.toLowerCase().includes(query.toLowerCase())||a.desc.toLowerCase().includes(query.toLowerCase())));
-    grid.replaceChildren(...(list.length?list.map(([id,a])=>{
-      const is=installed.includes(id);
-      return el('div',{class:'storecard'},
-        el('div',{class:'shead'},el('div',{class:'sicon'},a.icon),el('div',{},el('h3',{},a.name),el('div',{class:'m'},a.type))),
-        el('p',{},a.desc),
-        el('div',{class:'smeta'},el('span',{},a.size),el('span',{},is?'Installed':'Offline package')),
-        el('div',{class:'sactions'},
-          is?el('button',{class:'btn pri',onclick:()=>openStoreItem(id)},'Open'):el('button',{class:'btn pri',onclick:()=>{storeInstall(id);render()}},'Download & Install'),
-          is?el('button',{class:'btn',onclick:()=>{if(confirm('Remove '+a.name+' from this device?')){storeUninstall(id);render()}}},'Remove'):el('button',{class:'btn',onclick:()=>{alert(a.name+' is included in this LanPC App Store package and works offline.')}},'Details')
-        )
-      )
-    }):[el('div',{class:'storeempty'},'No matching apps or games.')]));
+  const cats=['All','App','Game','Mine'];
+  const cardFor = (id, a, mine, installed) => {
+    const is = installed.includes(id);
+    return el('div',{class:'storecard'},
+      el('div',{class:'shead'},el('div',{class:'sicon'},a.icon),el('div',{},el('h3',{},a.name),el('div',{class:'m'},mine?'Your app':a.type))),
+      el('p',{},a.desc),
+      el('div',{class:'smeta'},el('span',{},mine?'Custom':(a.genre||a.type)),el('span',{},a.size||''),el('span',{},is?'Installed':'Ready')),
+      el('div',{class:'sactions'},
+        is?el('button',{class:'btn pri',onclick:()=>openStoreItem(id)},'Open'):el('button',{class:'btn pri',onclick:()=>{storeInstall(id);render()}},'Install'),
+        mine?el('button',{class:'btn',onclick:async()=>{if(!confirm('Delete '+a.name+' from the store?'))return; await api('/api/userapps?id='+encodeURIComponent(id.slice(5)),{method:'DELETE'}); storeUninstall(id); await loadUserApps(); render();}},'Delete'):
+        is?el('button',{class:'btn',onclick:()=>{if(confirm('Remove '+a.name+' from this device?')){storeUninstall(id);render()}}},'Remove'):el('button',{class:'btn',onclick:()=>alert(a.desc)},'Details')
+      ));
   };
-  tabs.replaceChildren(...cats.map(c=>el('button',{class:'storetab'+(c===category?' on':''),onclick:()=>{category=c;tabs.querySelectorAll('button').forEach(b=>b.classList.remove('on'));event.currentTarget.classList.add('on');render()}},c==='App'?'Apps':c==='Game'?'Games':'All')));
+  const render=async()=>{
+    await loadUserApps();
+    const installed=storeInstalled();
+    const builtin=Object.entries(StoreApps).filter(([id,a])=>(category==='All'||a.type===category)&&(!genre||a.genre===genre)&&(!query||(a.name+' '+(a.genre||'')+' '+a.desc).toLowerCase().includes(query.toLowerCase()))).map(([id,a])=>cardFor(id,a,false,installed));
+    const mine=(category==='All'||category==='Mine')?userApps.filter(a=>!query||(a.name+' '+a.desc).toLowerCase().includes(query.toLowerCase())).map(a=>cardFor('user:'+a.id,a,true,installed)):[];
+    const list=[...mine,...builtin];
+    grid.replaceChildren(...(list.length?list:[el('div',{class:'storeempty'},'No matching apps or games.')]));
+  };
+  tabs.replaceChildren(...cats.map(c=>el('button',{class:'storetab'+(c===category?' on':''),onclick:()=>{category=c;tabs.querySelectorAll('button').forEach(b=>b.classList.remove('on'));event.currentTarget.classList.add('on');render()}},c==='App'?'Apps':c==='Game'?'Games':c==='Mine'?'My apps':'All')));
   search.oninput=()=>{query=search.value;render()};
-  body.append(el('div',{class:'storebar'},el('b',{},'LanPC App Store'),search),tabs,grid);
+  const genreSel=el('select',{class:'in'},el('option',{value:''},'All genres'),...[...new Set(Object.values(StoreApps).map(a=>a.genre).filter(Boolean))].sort().map(g=>el('option',{value:g},g)));
+  genreSel.onchange=()=>{genre=genreSel.value;render()};
+  const upName=el('input',{class:'in',placeholder:'App name',maxlength:'32',style:'width:120px'});
+  const upIcon=el('input',{class:'in',placeholder:'Icon',value:'📦',maxlength:'4',style:'width:64px'});
+  const upDesc=el('input',{class:'in',placeholder:'Short description',maxlength:'180',style:'width:180px'});
+  const upFile=el('input',{type:'file',accept:'.zip,application/zip'});
+  const publish=async()=>{
+    const f=upFile.files&&upFile.files[0];
+    if(!f) return alert('Choose a .zip that contains your .html files.');
+    if(!upName.value.trim()) return alert('Give the app a name.');
+    const q='/api/userapps?name='+encodeURIComponent(upName.value.trim())+'&icon='+encodeURIComponent(upIcon.value.trim()||'📦')+'&desc='+encodeURIComponent(upDesc.value.trim()||'Custom app');
+    try { await api(q,{method:'POST',body:f}); } catch (e) { return alert(e.message); }
+    upFile.value=''; upName.value=''; upDesc.value='';
+    category='Mine'; render();
+    alert('Added to the store. Press Install on the card to put it on the desktop.');
+  };
+  body.append(el('div',{class:'storebar'},el('b',{},'LanPC App Store'),genreSel,search),
+    el('div',{class:'tool'},el('b',{},'Make an app'),upName,upIcon,upDesc,upFile,el('button',{class:'btn pri',onclick:publish},'Add to store')),
+    tabs,grid);
   render();
 }};
 
@@ -671,7 +1683,8 @@ async function boot() {
 
 function enterDesktop(st) {
   applyTheme(st.theme); acct = st.user; me = (localStorage.getItem('name') || st.user || 'guest').slice(0, 24);
-  buildStart(); refreshStoreDesktop(); hideScreen(); document.body.classList.add('desk-on');
+  loadUserApps().then(() => { buildStart(); refreshStoreDesktop(); });
+  hideScreen(); document.body.classList.add('desk-on');
 }
 
 function login(st) {
@@ -759,13 +1772,16 @@ async function stopServer() {
 }
 
 // ---------- Desktop shell ----------
-const launchers = ['files', 'notepad', 'chat', 'term', 'calc', 'paint', 'sys', 'settings', 'store'];
+const launchers = ['files', 'browser', 'crazy', 'doom', 'media', 'notepad', 'code', 'ai', 'chat', 'term', 'calc', 'paint', 'sys', 'settings', 'store'];
 launchers.forEach(k => $('#icons').append(el('button', { class: 'icon', onclick: () => openApp(Apps[k]) }, el('b', {}, Apps[k].icon), el('span', {}, Apps[k].name))));
 const start = $('#start');
 function buildStart() {
   const close = f => () => { start.classList.remove('open'); f(); };
   start.replaceChildren(...launchers.map(k => el('button', { onclick: close(() => openApp(Apps[k])) }, Apps[k].icon, Apps[k].name)),
-    ...storeInstalled().map(id => el('button', { onclick: close(() => openApp(StoreApps[id])) }, StoreApps[id].icon, StoreApps[id].name)), el('hr'),
+    ...storeInstalled().map(id => {
+      const a = id.startsWith('user:') ? userApp(id.slice(5)) : StoreApps[id];
+      return a ? el('button', { onclick: close(() => openApp(a)) }, a.icon, a.name) : null;
+    }), el('hr'),
     el('button', { onclick: close(() => openApp(Apps.settings, { tab: 'Account' })) }, '👤', 'Signed in as ' + me), el('hr'),
     el('button', { onclick: close(restart) }, '🔄', 'Restart'),
     el('button', { onclick: close(shutdown) }, '⏻', 'Shut down'),

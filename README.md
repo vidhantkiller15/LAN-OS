@@ -33,3 +33,13 @@ Shared files live in `shared/`. The account is stored in `system/config.json` (p
 ## Notes
 - If other devices can't connect, allow Python through your firewall on private networks.
 - Traffic is plain HTTP, so use it only on a network you trust.
+
+
+## Built-in apps added
+- **Media:** plays images, video and music from the shared drive. Upload goes into `shared/Media/`.
+- **Files:** New file creates an empty file in the current folder. Terminal also has `touch`.
+- **Code:** a VS Code-style workspace over the shared drive (explorer, tabs, save, preview, AI panel).
+- **AI Hub:** chat that calls OpenRouter. The API key is saved only in this browser and is sent only to OpenRouter.
+
+## App Store
+More offline apps (Pomodoro, passwords, flashcards, budget, weather, and others) and games (2048, Minesweeper, Breakout, Hangman, Simon, Tetris, and others). Install from the store to pin them on the desktop.
